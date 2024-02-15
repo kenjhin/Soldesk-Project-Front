@@ -1,6 +1,5 @@
 /* eslint-disable */ 
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Route, Routes, useNavigate, Outlet } from 'react-router-dom';
 import Login from './Login';
