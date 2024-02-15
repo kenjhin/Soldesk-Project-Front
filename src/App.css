@@ -1,5 +1,8 @@
 body{
   background-color: black;
+  padding: 20px;
+  margin: 0px;
+
 }
 
 .screen1{
@@ -28,4 +31,28 @@ body{
 
 .span1{
   color: white;
+}
+
+.logintest{
+
+
+  text-align: center;
+  padding: 20px;
+  margin: 0px;
+  
+  color: aliceblue;
+}
+
+.LoginForm{
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+
+
+  color: aliceblue;
+  width: 300px;
+  height: 400px;
+
 }
