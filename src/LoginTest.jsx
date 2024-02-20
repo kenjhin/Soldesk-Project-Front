@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 // 로그인 로그아웃 State 추가 예정
 // ajax 통신 > 프로필기능 추가 예정 <팀원들과 같이!>
 
-function Login() {
+function LoginTest() {
     return(
         <div className="logintest">
 
@@ -35,4 +35,4 @@ function Login() {
         )
 }
 
-export default Login;
+export default LoginTest;

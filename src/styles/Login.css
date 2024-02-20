@@ -1,0 +1,88 @@
+.loginBody{
+    background-color: white;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.loginArea{
+    width: 25vw;
+    height: 400px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}.loginLogo{
+    width: 25vw;
+    margin: 10px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}.loginInputArea{
+    width : 400px;
+    height: 200px;
+    margin-bottom: 500px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}.idPlaceholder{
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 100px;
+    margin-right: 100px;
+    position: relative;
+    z-index: 2;
+    right: 115px;
+    top: 50px;
+    color: grey;
+    transition: all .5s;
+    &:hover{
+        cursor: text;
+    }
+}.loginInput{
+    position: relative;
+    z-index: 1;
+    width: 300px;
+    height: 50px;
+    padding: 10px;
+    padding-top: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: rgb(245, 240, 240);
+    outline: none;
+    border: none;
+    &:focus{
+        outline: black 2px solid;
+        background-color: white;
+        &:hover{
+            background-color: white;
+        }
+    }
+    &:hover{
+        background-color: rgb(231, 227, 227);
+    }
+}.loginInput::placeholder{
+    font-size: 12px;
+}.idCheckboxContainer{
+    width: 300px;
+    height: 50px;
+}.idCheckLabel{
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+}.idCheckbox{
+    margin-right: 5px;
+    border-radius: 20%;
+    outline: none;
+    cursor: pointer;
+}.idCheckbox:checked{
+    accent-color: red;
+}.loginBanner{
+    width: 75vw;
+    height: 100vh;
+}
