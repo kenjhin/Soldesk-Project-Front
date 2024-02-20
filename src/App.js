@@ -1,43 +1,71 @@
-/* eslint-disable */ 
-import React, { useState } from 'react';
-import './styles/App.css';
-import storeIco from './assets/img/store_ico.png'
-import myInfoIco from './assets/img/myInfo_ico.png'
-import inventoryIco from './assets/img/inventory_ico.png'
-import hamster from './assets/img/hamster.jpg'
-import nbg from './assets/font/NanumBarunGothic.ttf'
-import nbgB from './assets/font/NanumBarunGothicBold.ttf'
-import nbgL from './assets/font/NanumBarunGothicLight.ttf'
-import nbgUL from './assets/font/NanumBarunGothicUltraLight.ttf'
-function App() {
+/* eslint-disable */
+import React, { useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
+// css
+import "./styles/App.css";
+import "./styles/Login.css";
+// img
+import storeIco from "./assets/img/home/nav-icon-store.png";
+import myInfoIco from "./assets/img/home/nav-icon-profile.png";
+import inventoryIco from "./assets/img/home/nav-icon-collections.png";
+import hamster from "./assets/img/hamster.jpg";
+import addPerson from "./assets/img/home/add_person_mask.png";
+import addFolder from "./assets/img/home/add_folder_mask.png";
+import search from "./assets/img/home/search_mask.png";
+import sort from "./assets/img/home/sort_mask.png";
+// fonts
+import nbg from "./assets/font/NanumBarunGothic.ttf";
+import nbgB from "./assets/font/NanumBarunGothicBold.ttf";
+import nbgL from "./assets/font/NanumBarunGothicLight.ttf";
+import nbgUL from "./assets/font/NanumBarunGothicUltraLight.ttf";
+// components
+import Login from "./pages/Login"
 
+function App() {
   return (
     <>
-      <header className='header'>
-        <div className='headerBtnBox'>
-          <div className='headerBox1'>
-            <button className='noticeBtn'>!</button>
-            <button className='homeBtn'>홈</button>
-            <img className='myInfoBtn' src={myInfoIco} alt=''/>
-            <img className='inventoryBtn' src={inventoryIco} alt=''/>
-            <img className='storeBtn' src={storeIco} alt=''/>
-          </div>
-          <div className='headerBox2'>
-            <img className='userIcon' src={hamster} alt=''/>
-          </div>
-        </div>
-      </header>
-          
-      <div className='messenger'>
-        <button className='messengerText'>커뮤니티</button>
-        <button className='messengerBtn'>ㅇ</button>
-        <button className='messengerBtn'>ㅇ</button>
-        <button className='messengerBtn'>ㅇ</button>
-        <button className='messengerBtn'>ㅇ</button>
-      </div>
+      <Routes>
+        <Route
+          path="/home"
+          element={
+            <>
+              <header className="header">
+                <div className="headerBtnBox">
+                  <div className="headerBox1">
+                    <button className="noticeBtn">!</button>
+                    <button className="homeBtn">홈</button>
+                    <img className="myInfoBtn" src={myInfoIco} alt="" />
+                    <img className="inventoryBtn" src={inventoryIco} alt="" />
+                    <img className="storeBtn" src={storeIco} alt="" />
+                  </div>
+                  <div className="headerBox2">
+                    <img className="userIcon" src={hamster} alt="" />
+                  </div>
+                </div>
+              </header>
 
-      <main></main>
-      <footer></footer>
+              <div className="messenger">
+                <button className="messengerText">커뮤니티</button>
+                <button className="messengerBtn"><img className="messengerBtn" src={search}/></button>
+                <button className="messengerBtn"><img className="messengerBtn" src={sort}/></button>
+                <button className="messengerBtn"><img className="messengerBtn" src={addFolder}/></button>
+                <button className="messengerBtn"><img className="messengerBtn" src={addPerson}/></button>
+              </div>
+
+              <main></main>
+              <footer></footer>
+            </>
+          }
+        />
+        {/* <Route paht="/"/>    로그인 세션이 유효하면 home으로 연결, 유효하지 않으면 login으로 연결 */}
+        <Route path="/" 
+          element={
+            <>
+              <Login/>
+            </>
+          }
+        />
+      </Routes>
     </>
   );
 }

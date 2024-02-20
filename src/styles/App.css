@@ -1,6 +1,6 @@
 body{
   background-color: black;
-  min-width: 1600px;
+  min-width: 100%;
 }
 
 .header{
@@ -53,12 +53,15 @@ body{
   width: 40px;
   height: 40px;
 }.myInfoBtn{
+  height: 30px;
   margin-left: 80%;
   cursor: pointer;
 }.inventoryBtn{
+  height: 30px;
   margin-left: 20px;
   cursor: pointer;
 }.storeBtn{
+  height: 30px;
   margin-left: 20px;
   cursor: pointer;
 }.userIcon{
@@ -85,12 +88,25 @@ body{
   float: left;
   margin: 5px;
 }.messengerBtn{
+  width: 18px;
+  height: 18px;
   outline:none;
   border: none;
   background: none;
-  color: #d3c495;
   float: right;
   margin: 5px;
+}.messengerBtn > img{
+  width: 18px;
+  height: 18px;
+  outline:none;
+  border: none;
+  background: none;
+  color: black;
+  float: right;
+  margin: 5px;
+  filter: saturate(500%);
+}.messengerBtn > img:hover{
+  filter: saturate(0%);
 }
 
 .span1{
