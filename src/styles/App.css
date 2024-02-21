@@ -5,10 +5,11 @@ body{
 
 .header{
   width: 100%;
+  min-width: 1920px;
   height: 80px;
+  min-width: 80px;
   background-color: #020e17;
   display: flex;
-  min-width: 1600px;
   box-sizing: border-box;   /* border 안쪽으로 넣을때 쓰는거 */
   border-top: 3px solid #785a28;
   border-bottom: 1px solid rgba(222, 187, 128, 0.3);
