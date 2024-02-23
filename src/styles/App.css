@@ -1,33 +1,42 @@
 body{
   background-color: black;
-  min-width: 100%;
+  min-width: 1920px;
+  overflow: hidden;
 }
 
+.homeBody{
+  width: 1920px;
+  height: 1080px;
+}
 .header{
-  width: 100%;
+  width: 1920px;
   min-width: 1920px;
   height: 80px;
   min-width: 80px;
   background-color: #020e17;
   display: flex;
+  flex-wrap: nowrap;
   box-sizing: border-box;   /* border 안쪽으로 넣을때 쓰는거 */
   border-top: 3px solid #785a28;
   border-bottom: 1px solid rgba(222, 187, 128, 0.3);
   background-clip: padding-box /* border설정할 때 투명도를 건드리면 회색이 되는데, 원색을 찾기 위해서 써줘야함 */
 }.headerBtnBox{
-  margin-top: 10px;
-  width: 80%;
-  height: 60px;
+  width: calc(1920px - 270px);
+  height: 80px;
   display: flex;
   align-items: center;
-  min-width: 1600px;
-}.headerBox1{
-  min-width: 1620px;
+  /* border: white 1px solid; */
+}.headerBtnBox > .leftBtnBox{
+  width: 1300px;
+  /* border: white 1px solid; */
+}.headerBtnBox > .rightBtnBox{
+  width: calc(1650px - 1300px);
   display: flex;
-  align-items: center;
-}.headerBox2{
-  margin-left: 20px;
-  min-width: 220px;
+  justify-content: flex-end;
+  /* border: white 1px solid; */
+}.headerProfileBox{
+  margin-left: 0px;
+  width: 270px;
   display: flex;
   align-items: center;
 }.noticeBtn{
@@ -39,10 +48,7 @@ body{
   cursor: pointer;
   color: white;
   border-radius: 70%;
-  min-width: 30px;
-  min-height: 30px;
-  max-width: 30px;
-  max-height: 30px;
+  width: 40px;
 }.homeBtn{
   margin-left: 20px;
   margin-right: 10px;
@@ -53,9 +59,21 @@ body{
   cursor: pointer;
   width: 40px;
   height: 40px;
+}.boardBtn{
+  font-size: 20px;
+  background: none;
+  border: none;
+  color: #d3c495;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 160px;
+  height: 40px;
+  &:hover{
+    background: linear-gradient(180deg,rgba(255,255,255,0) 0%, rgba(255, 255, 255, 1) 100%);
+  }
 }.myInfoBtn{
   height: 30px;
-  margin-left: 80%;
   cursor: pointer;
 }.inventoryBtn{
   height: 30px;
@@ -64,9 +82,10 @@ body{
 }.storeBtn{
   height: 30px;
   margin-left: 20px;
+  margin-right: 20px;
   cursor: pointer;
 }.userIcon{
-  margin-left: 0px;
+  margin-left: 20px;
   border-radius: 70%;
   width: 55px;
   height: 55px;
@@ -76,8 +95,8 @@ body{
 }
 
 .messenger{
-  width: 250px;
-  height: calc(100vh - 80px);
+  width: 270px;
+  height: 850px;
   background-color: #040f18;
   float: right;
 }.messengerText{

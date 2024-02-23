@@ -65,7 +65,6 @@
         background-color: #d53235;
 
         & .loginBtn{
-            border-image: 1px solid black;
             filter: brightness(100) saturate(100);
         }
     }
