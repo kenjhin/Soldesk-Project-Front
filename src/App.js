@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 // css
 import "./styles/App.css";
-import "./styles/Login.css";
 // img
 import storeIco from "./assets/img/home/nav-icon-store.png";
 import myInfoIco from "./assets/img/home/nav-icon-profile.png";
@@ -18,8 +17,9 @@ import nbg from "./assets/font/NanumBarunGothic.ttf";
 import nbgB from "./assets/font/NanumBarunGothicBold.ttf";
 import nbgL from "./assets/font/NanumBarunGothicLight.ttf";
 import nbgUL from "./assets/font/NanumBarunGothicUltraLight.ttf";
-// components
+// pages
 import Login from "./pages/Login"
+import Main from "./pages/Main"
 
 function App() {
   return (
@@ -28,33 +28,44 @@ function App() {
         <Route
           path="/home"
           element={
-            <>
+            <div className="homeBody">
               <header className="header">
                 <div className="headerBtnBox">
-                  <div className="headerBox1">
+                  <div className="leftBtnBox">
                     <button className="noticeBtn">!</button>
                     <button className="homeBtn">홈</button>
+                    <button className="boardBtn">자유게시판</button>
+                    <button className="boardBtn">인기게시판</button>
+                    <button className="boardBtn">이슈게시판</button>
+                    <button className="boardBtn">기념게시판</button>
+                    <button className="boardBtn">기모띵게시판</button>
+                  </div>
+                  <div className="rightBtnBox">
                     <img className="myInfoBtn" src={myInfoIco} alt="" />
                     <img className="inventoryBtn" src={inventoryIco} alt="" />
                     <img className="storeBtn" src={storeIco} alt="" />
                   </div>
-                  <div className="headerBox2">
-                    <img className="userIcon" src={hamster} alt="" />
-                  </div>
+                </div>
+                <div className="headerProfileBox">
+                  <img className="userIcon" src={hamster} alt="" />
                 </div>
               </header>
 
-              <div className="messenger">
-                <button className="messengerText">커뮤니티</button>
-                <button className="messengerBtn"><img className="messengerBtn" src={search}/></button>
-                <button className="messengerBtn"><img className="messengerBtn" src={sort}/></button>
-                <button className="messengerBtn"><img className="messengerBtn" src={addFolder}/></button>
-                <button className="messengerBtn"><img className="messengerBtn" src={addPerson}/></button>
-              </div>
+              <main className="main">
+                <div className="messenger">
+                  <button className="messengerText">커뮤니티</button>
+                  <button className="messengerBtn"><img className="messengerBtn" src={search}/></button>
+                  <button className="messengerBtn"><img className="messengerBtn" src={sort}/></button>
+                  <button className="messengerBtn"><img className="messengerBtn" src={addFolder}/></button>
+                  <button className="messengerBtn"><img className="messengerBtn" src={addPerson}/></button>
+                </div>
+                <Main/>
+              </main>
 
-              <main></main>
-              <footer></footer>
-            </>
+              <footer>
+
+              </footer>
+            </div>
           }
         />
         {/* <Route paht="/"/>    로그인 세션이 유효하면 home으로 연결, 유효하지 않으면 login으로 연결 */}
