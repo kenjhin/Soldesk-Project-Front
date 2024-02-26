@@ -22,6 +22,7 @@ import nbgUL from "./assets/font/NanumBarunGothicUltraLight.ttf";
 import Login from "./pages/Login"
 import Main from "./pages/Main"
 import IconSetModal from './components/modals/IconSetModal';
+import Board from './pages/Board'
 
 function App() {
   const [logined, setLogined] = useState(true);
