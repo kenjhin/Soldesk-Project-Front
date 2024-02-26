@@ -125,6 +125,14 @@ function App() {
             </div>
           }
         />
+        {/* <Route paht="/"/>    로그인 세션이 유효하면 home으로 연결, 유효하지 않으면 login으로 연결 */}
+        <Route path="/" 
+          element={
+            <>
+              <Login/>
+            </>
+          }
+        />
       </Routes>
     </>
   );
