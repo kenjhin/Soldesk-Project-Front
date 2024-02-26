@@ -20,6 +20,7 @@ import nbgUL from "./assets/font/NanumBarunGothicUltraLight.ttf";
 // pages
 import Login from "./pages/Login"
 import Main from "./pages/Main"
+import Board from './pages/Board'
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
             </>
           }
         />
+         <Route path="/board" element={<Board />} />
       </Routes>
     </>
   );
