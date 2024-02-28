@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState } from "react";
 import "../styles/Login.css";
-import loginBanner from "../assets/img/login_banner.png";
+import loginBanner from "../assets/img/login/login_banner.png";
 import arrow from "../assets/img/login/arrow_right.png"
 import riot_logo from "../assets/img/login/riot_logo.png"
 import TextInput from "../components/TextInput.jsx"
