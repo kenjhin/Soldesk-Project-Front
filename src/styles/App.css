@@ -1,8 +1,31 @@
+@font-face {
+	font-family: "nbg";
+	src: url("../assets/font/NanumBarunGothic.ttf");
+}
+
+@font-face {
+	font-family: "nbgB";
+	src: url("../assets/font/NanumBarunGothicBold.ttf");
+}
+
+@font-face {
+	font-family: "nbgL";
+	src: url("../assets/font/NanumBarunGothicLight.ttf");
+}
+
+@font-face {
+	font-family: "nbgUL";
+	src: url("../assets/font/NanumBarunGothicUltraLight.ttf");
+}
+
 body{
   background-color: black;
   min-width: 1920px;
+  display: flex;
+  justify-content: center;
   overflow: hidden;
 }
+
 
 .mouseover{
   &:hover{
@@ -110,7 +133,7 @@ body{
 }.storeImg{
   height: 30px;
 }.userIcon{
-  margin-left: 20px;
+  margin-left: 10px;
   border-radius: 70%;
   width: 55px;
   height: 55px;
@@ -156,7 +179,6 @@ body{
 .iconModal{
   display: flex;
   border: solid #463714 2px;
-
 }.iconModalLeftBox{
   display: flex;
   flex-direction: column;
@@ -203,6 +225,7 @@ body{
     border: #7c6224 solid 3px;
     object-fit: cover;    /* 이미지 비율 유지 */
     margin-bottom: 20px;
+    cursor: pointer;
   }
 }
 .nameBox{
@@ -230,6 +253,59 @@ body{
   }
 }
 
+.myInfoBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  input{
+    width: 500px;
+    height: 40px;
+    padding-left: 20px;
+    background: none;
+    border: #353637 solid 1px;
+    color: white;
+    cursor: pointer;
+    &:focus{
+      border: #c49934 1px solid;
+      outline: none;
+    }
+  }
+  button{
+    border: #353637 solid 1px;
+    outline: none;
+    background: #f0de10;
+    color: white;
+    margin-top: 40px;
+    width: 500px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 20px;
+    text-shadow: 0px 1px 7px #020e17 ;
+    &:active{
+      background: #eeb30f;
+    }
+  }
+  h1{
+    font-size: 44px;
+    font-family: "nbgB";
+    font-weight: bolder;
+    color: #f0de10;
+  }
+}.myInfo-1{
+  flex-basis: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}.myInfo-2{
+  flex-basis: 100%;
+  text-align: center;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 
 .span1{
   color: white;

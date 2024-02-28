@@ -1,0 +1,25 @@
+.myInfo-container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .myInfo-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #1E1F21;
+    width: 600px;
+    height: auto;
+    padding: 50px;
+    border: #7c6224 solid 2px;
+    border-radius: 20px;
+  }
