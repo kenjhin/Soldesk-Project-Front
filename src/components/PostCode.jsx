@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 const PostCode = ({onAddressSelected, value1, value2, style}) => {
   const open = useDaumPostcodePopup();
+  const [isPopupOpen, setIsPopupOpen] = useState();
 
   const handleComplete = (data) => {
     let fullAddress = data.address;
@@ -19,25 +20,30 @@ const PostCode = ({onAddressSelected, value1, value2, style}) => {
     }
 
     const zonecode = data.zonecode;
-
     onAddressSelected(zonecode, fullAddress);
+    setIsPopupOpen(false);
   };
 
   const handleClick = () => {
+    setIsPopupOpen(true);
+    if(isPopupOpen){
+        alert('이미 열려있습니다.')
+        return;
+    }
     open({ onComplete: handleComplete });
   };
 
   return (
     <div>
       <input
-        defaultValue={value1}
+        value={value1}
         onClick={handleClick}
         style={style}
         spellCheck="false"
         readOnly
       />
       <input
-        defaultValue={value2}
+        value={value2}
         onClick={handleClick}
         style={style}
         spellCheck="false"
