@@ -1,15 +1,15 @@
-.btn-wrapper {
+.icon-btn-wrapper {
     display: flex;
     justify-content: center;
   }
 
-.modal-open-btn{
+.icon-modal-open-btn{
   cursor: pointer;
   border: none;
   background: none;
 }
   
-.modal-container {
+.icon-modal-container {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -22,7 +22,7 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
+.icon-modal-content {
   background-color: #02080e;
   width: 1000px;
   height: 600px;

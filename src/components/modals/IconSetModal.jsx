@@ -7,19 +7,19 @@ const IconSetModal = ({img, content}) => {
 
   return (
     <>
-      <div className="btn-wrapper">
-        <button className="modal-open-btn" onClick={() => setModalOpen(true)}>
+      <div className="icon-btn-wrapper">
+        <button className="icon-modal-open-btn" onClick={() => setModalOpen(true)}>
           {img}
         </button>
       </div>
       {
         modalOpen &&
-        <div className="modal-container" ref={modalBackground} onClick={e => {
+        <div className="icon-container" ref={modalBackground} onClick={e => {
           if (e.target === modalBackground.current) {
             setModalOpen(false);
           }
         }}>
-          <div className="modal-content">
+          <div className="icon-content">
             {content}
           </div>
         </div>

@@ -1,5 +1,4 @@
 import {Button, Modal, Form, Container} from 'react-bootstrap';
-import HorizontalLine from "../HorizonLine.jsx";
 
 function SignUpModal({show, onHide}) {
   return (
@@ -46,7 +45,6 @@ function SignUpModal({show, onHide}) {
         <Modal.Footer>
           <Button variant="danger" type="button" style={{width: '100%'}}>회원가입</Button>
         </Modal.Footer>
-        {/* <HorizontalLine text={""}/> */}
       </Container>
     </Modal>
   );
