@@ -1,7 +1,6 @@
 /* eslint-disable */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import DaumPostcode from 'react-daum-postcode';
 // css
 import "./styles/App.css";
 // img
@@ -12,11 +11,6 @@ import addPerson from "./assets/img/home/add_person_mask.png";
 import addFolder from "./assets/img/home/add_folder_mask.png";
 import search from "./assets/img/home/search_mask.png";
 import sort from "./assets/img/home/sort_mask.png";
-// fonts
-import nbg from "./assets/font/NanumBarunGothic.ttf";
-import nbgB from "./assets/font/NanumBarunGothicBold.ttf";
-import nbgL from "./assets/font/NanumBarunGothicLight.ttf";
-import nbgUL from "./assets/font/NanumBarunGothicUltraLight.ttf";
 // pages
 import Login from "./pages/Login";
 import Main from "./pages/Main";
@@ -25,8 +19,10 @@ import Board from './pages/Board';
 import IconSetModal from './components/modals/IconSetModal';
 import MyInfoModal from './components/modals/MyInfoModal';
 
+
 function App() {
 
+  // state
   const [userInfo, setUserInfo] = useState({
     logined: true,
     icon: hamster,
@@ -38,51 +34,17 @@ function App() {
     pw: 'password',
     pwCheck: 'password',
     address: {
-      zonecode: '12345',
-      roadAddress: '인천광역시 서구 석남로 62번길 5',
-      detailAddress: '거평하이츠 라동 302호'
+      zonecode: 'zonecode',
+      fullAddress: 'fullAddress',
+      detailAddress: 'detailAddress'
     }
   });
   const boardNames = ['자유게시판', '인기게시판', '이슈게시판', '기념게시판', '신고게시판'];
 
-  const handleInputChange = (e, key) => {
-    setUserInfo((prevUserInfo) => ({
-      ...prevUserInfo,
-      [key]: e.target.value
-    }));
-  };
-
-  const handleDetailAddressChange = (e) => {
-    setUserInfo((prevUserInfo) => ({
-      ...prevUserInfo,
-      address: {
-        ...prevUserInfo.address,
-        detailAddress: e.target.value
-      }
-    }));
-  };
-
-  const handleConfirmClick = () => {
-    // 미입력 시 경고 메시지 추가
-    if (!userInfo.id || !userInfo.pw || !userInfo.pwCheck || !userInfo.nickname || !userInfo.address.zonecode || 
-        !userInfo.address.roadAddress || !userInfo.address.detailAddress) {
-      alert('모든 항목을 입력해주세요.');
-      
-      return;
-    }
-    
-    // 비밀번호 일치 여부 확인
-    if (userInfo.pw !== userInfo.pwCheck) {
-      alert('비밀번호가 일치하지 않습니다.');
-
-      return;
-    }
-  };
-
   return (
     <>
       <Routes>
-        {/* <Route paht="/"/>    로그인 세션이 유효하면 home으로 연결, 유효하지 않으면 login으로 연결 */}
+        {/* <Route path="/"/>    로그인 세션이 유효하면 home으로 연결, 유효하지 않으면 login으로 연결 */}
         <Route path="/login" 
           element={
             <>
@@ -111,31 +73,7 @@ function App() {
                     ))}
                   </div>
                   <div className="rightBtnBox">
-                    <MyInfoModal content={
-                      <div className="myInfoBox">
-                        <h1>MY INFO</h1>
-                        <div className="myInfo-1">
-                          <input value={userInfo.id} style={{borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}} readOnly/>
-                          <input value={userInfo.pw} type="password" placeholder="비밀번호"
-                            onChange={(e) => handleInputChange(e, 'pw')}/>
-                          <input value={userInfo.pwCheck} type="password" placeholder="비밀번호 확인" 
-                            onChange={(e) => handleInputChange(e, 'pwCheck')}
-                            style={{borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px'}}/>
-                            {userInfo.pw!==userInfo.pwCheck && 
-                              <p style={{color: 'red'}}>비밀번호가 일치하지 않습니다.</p>}
-                        </div>
-                        <div className="myInfo-2">
-                          <input value={userInfo.nickname} style={{borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}}/>
-                          <input value={JSON.stringify(userInfo.address.zonecode).replace(/"/g,'')} />
-                          <input value={JSON.stringify(userInfo.address.roadAddress).replace(/"/g,'')} />
-                          <input value={JSON.stringify(userInfo.address.detailAddress).replace(/"/g,'')} 
-                            style={{borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px'}}
-                            onChange={handleDetailAddressChange}/>
-                        </div>
-                        <button onClick={handleConfirmClick}>확인</button>
-                      </div>
-                    }
-                    />
+                    <MyInfoModal data={userInfo} setData={setUserInfo}/>
                     <button className="inventoryBtn mouseover">
                       <img src={inventoryIco} alt="" />
                     </button>
