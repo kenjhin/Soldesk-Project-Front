@@ -8,7 +8,9 @@ function TextInput({ type = 'text', label, onInputChange}) {
     const newValue = e.target.value;
     setValue(e.target.value);
 
-    onInputChange(newValue);
+    if(onInputChange){
+      onInputChange(newValue);
+    }
   }
 
   return (

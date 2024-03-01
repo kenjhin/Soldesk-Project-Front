@@ -51,7 +51,6 @@ const MyInfoModal = ({data, setData}) => {
 
   // 주소 선택시 저장
   const handleAddressSelected = (zonecode, fullAddress) => {
-
     setPrevData((prevUserInfo) => ({
       ...prevUserInfo,
       address: {
@@ -77,30 +76,35 @@ const MyInfoModal = ({data, setData}) => {
           }
         }}>
           <div className="myInfo-content">
-          <div className="myInfoBox">
-                        <h1>MY INFO</h1>
-                        <div className="myInfo-1">
-                          <input defaultValue={prevData.id} style={{borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}} 
-                                  readOnly spellCheck="false"/>
-                          <input value={prevData.pw} type="password" placeholder="비밀번호" 
-                                  onChange={(e) => handleInputChange(e, 'pw')}/>
-                          <input value={prevData.pwCheck} type="password" placeholder="비밀번호 확인" 
-                                  style={{borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px'}} 
-                                  onChange={(e) => handleInputChange(e, 'pwCheck')}/>
-                            {prevData.pw!==prevData.pwCheck && 
-                              <p style={{color: 'red'}}>비밀번호가 일치하지 않습니다.</p>}
-                        </div>
-                        <div className="myInfo-2">
-                          <input defaultValue={prevData.nickname} readOnly spellCheck="false" 
-                                  style={{borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}}/>
-                          <PostCode onAddressSelected={handleAddressSelected} 
-                                    value1={prevData.address.zonecode} value2={prevData.address.fullAddress}/>
-                          <input value={prevData.address.detailAddress} spellCheck="false"
-                            style={{borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px'}}
-                            onChange={(e) => handleInputChange(e, 'detailAddress')}/>
-                        </div>
-                        <button onClick={handleConfirmClick}>확인</button>
-                      </div>
+            <div className="myInfoBox">
+              <h1>MY INFO</h1>
+              <div className="myInfo-1">
+                <input defaultValue={prevData.id} style={{borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}} 
+                        readOnly spellCheck="false"/>
+                <input value={prevData.pw} type="password" placeholder="비밀번호" 
+                        onChange={(e) => handleInputChange(e, 'pw')}/>
+                <input value={prevData.pwCheck} type="password" placeholder="비밀번호 확인" 
+                        style={{borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px'}} 
+                        onChange={(e) => handleInputChange(e, 'pwCheck')}/>
+                  {prevData.pw!==prevData.pwCheck && 
+                    <p style={{color: 'red'}}>비밀번호가 일치하지 않습니다.</p>}
+              </div>
+              <div className="myInfo-2">
+                <input defaultValue={prevData.nickname} readOnly spellCheck="false" 
+                        style={{borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}}/>
+                
+                
+                <PostCode onAddressSelected={handleAddressSelected} 
+                          inputForm={<>
+                            <input value={prevData.address.zonecode} spellCheck="false" readOnly/>
+                            <input value={prevData.address.fullAddress} spellCheck="false" readOnly/>   
+                          </>}/>
+                <input value={prevData.address.detailAddress} spellCheck="false"
+                  style={{borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px'}}
+                  onChange={(e) => handleInputChange(e, 'detailAddress')}/>
+              </div>
+              <button onClick={handleConfirmClick}>확인</button>
+            </div>
           </div>
         </div>
       }

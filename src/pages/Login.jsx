@@ -9,24 +9,19 @@ import SignUpModal from "../components//modals/SignUpModal.jsx"
 
 function Login(){
   const [modalShow, setModalShow] = useState(false);
-  const [textInputValue, setTextInputValue] = useState('');
-
-  function handleTextInputValueChange(value){
-    setTextInputValue(value);
-  }
 
   function handleLoginClick(){
     // 모든 TextInput 값이 존재할 때 로그인버튼 활성화.
   }
- 
+
   return (
     <div className="loginBody">
       <div className="loginArea">
         <img className="loginLogo" src={riot_logo} alt=""/>
         <div className="loginLoginText">로그인</div>
         <div className="loginInputArea"> 
-          <TextInput label="계정이름" onInputChange={handleTextInputValueChange}></TextInput>
-          <TextInput id="textInputPw" label="비밀번호" type="password"></TextInput>
+          <TextInput label="계정이름" />
+          <TextInput label="비밀번호" type="password"/>
           <div className="idCheckboxContainer">
             <label className="idCheckLabel"><input className="idCheckbox" type="checkbox"/>로그인 상태 유지</label>
           </div>
