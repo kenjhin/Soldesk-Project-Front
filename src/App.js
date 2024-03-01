@@ -113,6 +113,7 @@ function App() {
                   <div className="nameBox">
                     <p className="nickname">{userInfo.nickname}</p>
                     <p className="profileMessage">"{userInfo.profileMessage}"</p>
+                    <button className="LogoutBtn">로그아웃</button>
                   </div>
                 </div>
               </header>

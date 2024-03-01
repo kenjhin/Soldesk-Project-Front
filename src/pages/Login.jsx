@@ -1,5 +1,7 @@
 /* eslint-disable */
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';  // axios import 추가
 import "../styles/Login.css";
 import loginBanner from "../assets/img/login/login_banner.png";
 import arrow from "../assets/img/login/arrow_right.png"
@@ -7,16 +9,40 @@ import riot_logo from "../assets/img/login/riot_logo.png"
 import TextInput from "../components/TextInput.jsx"
 import SignUpModal from "../components//modals/SignUpModal.jsx"
 
+
+
 function Login(){
   const [modalShow, setModalShow] = useState(false);
-  const [textInputValue, setTextInputValue] = useState('');
+  const [username, setUsername] = useState('');  
+  const [password, setPassword] = useState('');  
+  const navigate = useNavigate();
 
   function handleTextInputValueChange(value){
-    setTextInputValue(value);
+    setUsername(value);
   }
 
+  function handlePasswordChange(value) {
+    setPassword(value);
+  }
+
+// 로그인핸들러 함수
   function handleLoginClick(){
-    // 모든 TextInput 값이 존재할 때 로그인버튼 활성화.
+    axios.post('http://localhost:3001/login', { username, password })
+      .then(response => {
+        if (response.data.success) {
+          // 서버에서 전달받은 리다이렉트 경로로 이동
+          navigate(response.data.redirectPath);
+
+          // 세션 정보를 저장
+          sessionStorage.setItem('isLoggedIn', true);
+          sessionStorage.setItem('username', response.data.userInfo.username);
+          console.log('isLoggedIn:', sessionStorage.getItem('isLoggedIn'));
+          console.log('username:', sessionStorage.getItem('username'));
+        }
+      })
+      .catch(error => {
+        // 오류 처리
+      });
   }
  
   return (
@@ -26,7 +52,7 @@ function Login(){
         <div className="loginLoginText">로그인</div>
         <div className="loginInputArea"> 
           <TextInput label="계정이름" onInputChange={handleTextInputValueChange}></TextInput>
-          <TextInput id="textInputPw" label="비밀번호" type="password"></TextInput>
+          <TextInput id="textInputPw" label="비밀번호" type="password" onInputChange={handlePasswordChange}></TextInput>
           <div className="idCheckboxContainer">
             <label className="idCheckLabel"><input className="idCheckbox" type="checkbox"/>로그인 상태 유지</label>
           </div>
