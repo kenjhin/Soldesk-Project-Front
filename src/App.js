@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useState, useRef } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 // css
 import "./styles/App.css";
 // img
@@ -18,6 +18,7 @@ import Board from './pages/Board';
 // components
 import IconSetModal from './components/modals/IconSetModal';
 import MyInfoModal from './components/modals/MyInfoModal';
+import axios from "axios";
 
 
 function App() {
@@ -40,6 +41,36 @@ function App() {
     }
   });
   const boardNames = ['자유게시판', '인기게시판', '이슈게시판', '기념게시판', '신고게시판'];
+  const navigate = useNavigate();
+// 로그아웃 기능 임시 함수
+const handleLogout = () => {
+  axios.post('http://localhost:3001/logout')
+    .then(response => {
+      if (response.data.success) {
+        // 유저 세션 삭제후 Login페이지로 리다이렉트
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('username');
+        navigate(response.data.redirectPath);
+
+        console.log('로그아웃 확인 콘솔:', {
+          isLoggedIn: sessionStorage.getItem('isLoggedIn'),
+          username: sessionStorage.getItem('username')
+        });
+
+      } else if (response.data.sessionExpired) {
+        console.log('세션이 이미 만료되었습니다.');
+      } else {
+        console.error('로그아웃 실패:', response.data.message);
+      }
+    })
+    .catch(error => {
+      console.error('로그아웃 요청 오류:', error);
+    });
+};
+
+
+
+
 
   return (
     <>
@@ -83,6 +114,8 @@ function App() {
                   </div>
                 </div>
                 <div className="headerProfileBox">
+                  {/* 로그아웃 임시 버튼 만들었어요. */}
+                  <button className="logoutBtntest" onClick={handleLogout}>로그아웃</button>
                   {/* hamster에 현재 로그인한 계정의 아이콘 받아오기 */}
                   <IconSetModal img={<img className="userIcon" src={userInfo.icon} alt="" />}
                     content={
