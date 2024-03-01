@@ -60,8 +60,8 @@ function Login() {
         <img className="loginLogo" src={riot_logo} alt=""/>
         <div className="loginLoginText">로그인</div>
         <div className="loginInputArea"> 
-          <TextInput label="계정이름" value={username} onInputChange={handleTextInputValueChange}></TextInput>
-          <TextInput id="textInputPw" label="비밀번호" type="password" value={password} onInputChange={handlePasswordChange}></TextInput>
+          <TextInput label="계정이름" value={username} onInputChange={handleTextInputValueChange}/>
+          <TextInput label="비밀번호" type="password" value={password} onInputChange={handlePasswordChange}/>
           <div className="idCheckboxContainer">
             <label className="idCheckLabel"><input className="idCheckbox" type="checkbox"/>로그인 상태 유지</label>
           </div>
