@@ -6,16 +6,17 @@ import PostCode from '../PostCode';
 function SignUpModal({show, onHide}) {
 
   const defaultInfo = {
-    id: '',
-    pw: '',
+    username: '',
+    password: '',
     pwCheck: '',
-    nickname: '',
+    name: '',
     address: {
       zonecode: '',
       fullAddress: '',
       detailAddress: ''
     }
   };
+
   const [signUpInfo, setSignUpInfo] = useState(defaultInfo);
 
   const handleInputChange = (e, key) => {
@@ -47,68 +48,33 @@ function SignUpModal({show, onHide}) {
 
   const handleConfirmClick = () => {
     // 미입력 시 경고 메시지 추가
-    if (!signUpInfo.id || !signUpInfo.pw || !signUpInfo.pwCheck || !signUpInfo.nickname || !signUpInfo.address.zonecode || 
+    if (!signUpInfo.username || !signUpInfo.password || !signUpInfo.pwCheck || !signUpInfo.name || !signUpInfo.address.zonecode || 
       !signUpInfo.address.fullAddress || !signUpInfo.address.detailAddress) {
       alert('모든 항목을 입력해주세요.');
       return;
     }
     
     // 비밀번호 일치 여부 확인
-    if (signUpInfo.pw !== signUpInfo.pwCheck) {
+    if (signUpInfo.password !== signUpInfo.pwCheck) {
       alert('비밀번호가 일치하지 않습니다.');
       return;
     }
 
     // 회원가입 함수(DB로 데이터보내기)
-
-
-    // 초기화 및 종료.
-    handleSignUp();
-    alert('회원가입 완료');
-    onHide();
-    setSignUpInfo(defaultInfo);
-  };
-
-// 회원가입 user 스테이트
-  const [userData, setUserData] = useState({
-    username: '',
-    password: '',
-    confirmPassword: '',
-    nickname: '',
-    address: '',
-    detailedAddress: '',
-  });
-
-// INPUT-value값 다루는 함수 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-// 회원가입 처리 로직 서버 데이터로 전송하는 함수
-  const handleSignUp = () => {
-    // 간단한 클라이언트 측 유효성 검사
-    if (!userData.username || !userData.password || !userData.confirmPassword || 
-        userData.password !== userData.confirmPassword) {
-      alert('입력값이 올바르지 않습니다.');
-      return;
-    }
-
-    // 서버로 회원가입 정보 전송
-    axios.post('http://localhost:3001/signup', userData)
+    axios.post('http://localhost:3001/signup', signUpInfo)
       .then(response => {
         // 서버로부터의 응답 처리
         if (response.data.success) {
-          setUserData({
+          setSignUpInfo({
             username: '',
             password: '',
             confirmPassword: '',
             name: '',
-            address: '',
-            detailedAddress: '',
+            address: {
+              zonecode: '',
+              fullAddress: '',
+              detailAddress: ''
+            },
             authority: 'user',
             icon: 'null'
           });
@@ -121,7 +87,17 @@ function SignUpModal({show, onHide}) {
       .catch(error => {
         console.error('회원가입 오류:', error);
       });
+
+    // 초기화 및 종료.
+    
+    alert('회원가입 완료');
+    onHide();
+    setSignUpInfo(defaultInfo);
   };
+
+
+
+
 
   return (
     <Modal
@@ -144,22 +120,23 @@ function SignUpModal({show, onHide}) {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
-              <Form.Control value={signUpInfo.id} type="text" placeholder="아이디"
-                            onChange={(e) => handleInputChange(e, 'id')}
+              <Form.Control value={signUpInfo.username} type="text" placeholder="아이디"
+                            onChange={(e) => handleInputChange(e, 'username')}
                             style={{marginBottom: '15px'}}/>
-              <Form.Control value={signUpInfo.pw} type="password" placeholder="비밀번호" 
-                            onChange={(e) => handleInputChange(e, 'pw')}
+              <Form.Control value={signUpInfo.password} type="password" placeholder="비밀번호" 
+                            onChange={(e) => handleInputChange(e, 'password')}
                             style={{marginBottom: '15px'}}/>
               <Form.Control value={signUpInfo.pwCheck} type="password" placeholder="비밀번호 확인" 
                             onChange={(e) => handleInputChange(e, 'pwCheck')}
                             style={{marginBottom: '15px'}}/>
-              { signUpInfo.pw !== signUpInfo.pwCheck&& <p style={{color: 'red', marginLeft: '10px'}}>비밀번호가 일치하지 않습니다.</p>}
-              <Form.Control value={signUpInfo.nickname} type="text" placeholder="별명" 
-                            onChange={(e) => handleInputChange(e, 'nickname')}
+              { signUpInfo.password !== signUpInfo.pwCheck&& <p style={{color: 'red', marginLeft: '10px'}}>비밀번호가 일치하지 않습니다.</p>}
+              <Form.Control value={signUpInfo.name} type="text" placeholder="별명" 
+                            onChange={(e) => handleInputChange(e, 'name')}
                             style={{marginBottom: '15px'}}/>
-              <PostCode onAddressSelected={handleAddressSelected} 
+              <PostCode onAddressSelected={handleAddressSelected}
+                          
                         inputForm={<>
-                          <Form.Control value={signUpInfo.address.zonecode} type="text" placeholder="우편번호" 
+                          <Form.Control value={signUpInfo.address.zonecode}  type="text" placeholder="우편번호" 
                                         style={{marginBottom: '15px'}}/>
                           <Form.Control value={signUpInfo.address.fullAddress} type="text" placeholder="주소" 
                                         style={{marginBottom: '15px'}}/>              
