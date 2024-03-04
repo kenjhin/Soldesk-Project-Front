@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 // css
 import "./styles/App.css";
@@ -24,22 +24,20 @@ import axios from "axios";
 function App() {
 
   // state
+  // DB로부터 값을 받아서 넣을 곳(icons는 mysql에서 TEXT타입으로 하면 문자열배열로 나타낼수있음)
   const [userInfo, setUserInfo] = useState({
     logined: true,
     icon: hamster,
     icons: [hamster, hamster],
     nickname: '유저닉네임',
     profileMessage: '상태메시지',
-    status: undefined,
-    id: 'ID',
-    pw: 'password',
-    pwCheck: 'password',
-    address: {
-      zonecode: 'zonecode',
-      fullAddress: 'fullAddress',
-      detailAddress: 'detailAddress'
-    }
+    status: 'online',
+    username: 'ID',
+    password: 'password',
+    confirmPassword: 'password',
+    address: 'zonecode!!fullAddress!!detailAddress',
   });
+  
   const boardNames = ['자유게시판', '인기게시판', '이슈게시판', '기념게시판', '신고게시판'];
   const navigate = useNavigate();
   
@@ -95,7 +93,7 @@ function App() {
                       <button className="homeBtn mouseover">홈</button>
                     </Link>
                     {boardNames.map((boardName, index) => (
-                      <Link key={index + 1} to={`/board/${index + 1}`}>
+                      <Link key={index + 1} to={`/board/${index + 1}`} state={{boardId: index+1}}>
                         <button className="boardBtn mouseover">{boardName}</button>
                       </Link>
                     ))}
@@ -111,8 +109,6 @@ function App() {
                   </div>
                 </div>
                 <div className="headerProfileBox">
-                  {/* 로그아웃 임시 버튼 만들었어요. */}
-                  <button className="logoutBtntest" onClick={handleLogout}>로그아웃</button>
                   {/* hamster에 현재 로그인한 계정의 아이콘 받아오기 */}
                   <IconSetModal img={<img className="userIcon" src={userInfo.icon} alt="" />}
                     content={
@@ -129,7 +125,7 @@ function App() {
                             {
                               userInfo.icons.map(function(a, i){
                                 return (
-                                  <div className="iconsBox">
+                                  <div key={i} className="iconsBox">
                                     {/* 눌렀을 때 icon=icons[i]로 바꾸기 */}
                                     <img src={userInfo.icons[i]}/>
                                   </div>
@@ -139,20 +135,26 @@ function App() {
                           </div>
                         </div>
                       </div>
-                    }/>
+                  }/>
                   <div className="nameBox">
                     <p className="nickname">{userInfo.nickname}</p>
                     <p className="profileMessage">"{userInfo.profileMessage}"</p>
                   </div>
+                  <button className="logoutBtn" onClick={handleLogout}>logout</button>
                 </div>
               </header>
               <main className="main">
                 <div className="messenger">
-                  <p className="messengerText">커뮤니티</p>
-                  <button className="messengerBtn"><img className="messengerBtn" src={search}/></button>
-                  <button className="messengerBtn"><img className="messengerBtn" src={sort}/></button>
-                  <button className="messengerBtn"><img className="messengerBtn" src={addFolder}/></button>
-                  <button className="messengerBtn"><img className="messengerBtn" src={addPerson}/></button>
+                  <div className="messengerBtnBox">
+                    <p className="messengerText">커뮤니티</p>
+                    <button className="messengerBtn"><img src={search}/></button>
+                    <button className="messengerBtn"><img src={sort}/></button>
+                    <button className="messengerBtn"><img src={addFolder}/></button>
+                    <button className="messengerBtn"><img src={addPerson}/></button>
+                  </div>
+                  <div className="messengerGroupArea">
+
+                  </div>
                 </div>
                 <Main/>
               </main>
