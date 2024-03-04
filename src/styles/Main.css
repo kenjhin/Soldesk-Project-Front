@@ -18,6 +18,24 @@ td{
     color: rgb(255, 255, 255);
     text-align: center;
     width: 100px;
+    height: 30px;
+    border-bottom: 1px rgba(255,255,255, 0.1) solid;
+    a{
+        &:link{
+            text-decoration: none;
+            color: white;
+        }
+        &:visited{
+            text-decoration: none;
+            color: white;
+        }
+        &:hover{
+            text-decoration: underline;
+        }
+        &:active{
+            text-decoration: underline;
+        }
+    }
 }
 
 .boardTable{
@@ -25,10 +43,12 @@ td{
     flex-wrap: nowrap;
     justify-content: center;
     thead{
-        border-bottom: 2px rgba(255,255,255, 0.3) solid;
+        border-top: 2px rgba(255,255,255, 0.2) solid;
+        border-bottom: 1px rgba(255,255,255, 0.1) solid;
     }
     tbody{
-        border-bottom: 1px rgba(255,255,255, 0.3) solid;
+        min-width: 1000px;
+        border-bottom: 1px rgba(255,255,255, 0.2) solid;
     }
 }.th_title, .td_title{
     width: 500px;
@@ -57,4 +77,34 @@ td{
     width: 1000px;
     height: 200px;
     border: white solid 1px;
+}
+
+.postBox{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 1000px;
+    border: 1px white solid;
+    .post-header{
+        flex-basis: 100%;
+        border: 1px white solid;
+    }
+    .post-title{
+        flex-basis: 100%;
+    }
+    .post-writer{
+
+    }
+    .post-date{
+
+    }
+    .post-views{
+
+    }
+    .post-like{
+
+    }
+    p{
+        color: white;
+    }
 }

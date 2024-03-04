@@ -6,9 +6,9 @@ import PostCode from '../PostCode';
 function SignUpModal({show, onHide}) {
 
   const defaultInfo = {
-    id: '',
-    pw: '',
-    pwCheck: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
     nickname: '',
     address: {
       zonecode: '',
@@ -17,25 +17,39 @@ function SignUpModal({show, onHide}) {
     }
   };
   const [signUpInfo, setSignUpInfo] = useState(defaultInfo);
+  // 회원가입 user 스테이트
+  const [userData, setUserData] = useState({
+    username: '',
+    password: '',
+    confirmPassword: '',
+    nickname: '',
+    address: '',
+  });
 
   const handleInputChange = (e, key) => {
-    setSignUpInfo((prevData) => ({
-      ...prevData,
-      [key]: e.target.value,
-      address: {
-        ...prevData.address,
-        detailAddress: key === 'detailAddress' ? e.target.value : prevData.address.detailAddress,
-      },
-    }));
+    if(key!=='detailAddress'){
+      setSignUpInfo(() => ({
+        ...signUpInfo,
+        [key]: e.target.value,
+      }));
+    }else{
+      setSignUpInfo(() => ({
+        ...signUpInfo,
+        address: {
+          ...signUpInfo.address,
+          detailAddress: e.target.value,
+        },
+      }));
+    }
   };
   
   const handleAddressSelected = (zonecode, fullAddress) => {
-    setSignUpInfo((prevData) => ({
-      ...prevData,
+    setSignUpInfo((signUpInfo) => ({
+      ...signUpInfo,
       address: {
         zonecode: zonecode,
         fullAddress: fullAddress,
-        detailAddress: prevData.address.detailAddress
+        detailAddress: signUpInfo.address.detailAddress
       }
     }));
   };
@@ -47,20 +61,23 @@ function SignUpModal({show, onHide}) {
 
   const handleConfirmClick = () => {
     // 미입력 시 경고 메시지 추가
-    if (!signUpInfo.id || !signUpInfo.pw || !signUpInfo.pwCheck || !signUpInfo.nickname || !signUpInfo.address.zonecode || 
+    if (!signUpInfo.username || !signUpInfo.password || !signUpInfo.confirmPassword || !signUpInfo.nickname || !signUpInfo.address.zonecode || 
       !signUpInfo.address.fullAddress || !signUpInfo.address.detailAddress) {
       alert('모든 항목을 입력해주세요.');
       return;
     }
     
     // 비밀번호 일치 여부 확인
-    if (signUpInfo.pw !== signUpInfo.pwCheck) {
+    if (signUpInfo.password !== signUpInfo.confirmPassword) {
       alert('비밀번호가 일치하지 않습니다.');
       return;
     }
 
     // 회원가입 함수(DB로 데이터보내기)
-
+    setUserData(() =>({
+      ...signUpInfo,
+      address: [signUpInfo.address.zonecode, signUpInfo.address.fullAddress, signUpInfo.address.detailAddress].join('!!'),
+    }))
 
     // 초기화 및 종료.
     handleSignUp();
@@ -69,33 +86,26 @@ function SignUpModal({show, onHide}) {
     setSignUpInfo(defaultInfo);
   };
 
-// 회원가입 user 스테이트
-  const [userData, setUserData] = useState({
-    username: '',
-    password: '',
-    confirmPassword: '',
-    nickname: '',
-    address: '',
-    detailedAddress: '',
-  });
+
 
 // INPUT-value값 다루는 함수 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prevData) => ({
-      ...prevData,
+    setUserData((signUpInfo) => ({
+      ...signUpInfo,
       [name]: value,
     }));
   };
 
 // 회원가입 처리 로직 서버 데이터로 전송하는 함수
   const handleSignUp = () => {
-    // 간단한 클라이언트 측 유효성 검사
-    if (!userData.username || !userData.password || !userData.confirmPassword || 
-        userData.password !== userData.confirmPassword) {
-      alert('입력값이 올바르지 않습니다.');
-      return;
-    }
+    // 위에서 완료
+    // // 간단한 클라이언트 측 유효성 검사
+    // if (!userData.username || !userData.password || !userData.confirmPassword || 
+    //     userData.password !== userData.confirmPassword) {
+    //   alert('입력값이 올바르지 않습니다.');
+    //   return;
+    // }
 
     // 서버로 회원가입 정보 전송
     axios.post('http://localhost:3001/signup', userData)
@@ -106,9 +116,8 @@ function SignUpModal({show, onHide}) {
             username: '',
             password: '',
             confirmPassword: '',
-            name: '',
+            nickname: '',
             address: '',
-            detailedAddress: '',
             authority: 'user',
             icon: 'null'
           });
@@ -144,16 +153,16 @@ function SignUpModal({show, onHide}) {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
-              <Form.Control value={signUpInfo.id} type="text" placeholder="아이디"
-                            onChange={(e) => handleInputChange(e, 'id')}
+              <Form.Control value={signUpInfo.username} type="text" placeholder="아이디"
+                            onChange={(e) => handleInputChange(e, 'username')}
                             style={{marginBottom: '15px'}}/>
-              <Form.Control value={signUpInfo.pw} type="password" placeholder="비밀번호" 
-                            onChange={(e) => handleInputChange(e, 'pw')}
+              <Form.Control value={signUpInfo.password} type="password" placeholder="비밀번호" 
+                            onChange={(e) => handleInputChange(e, 'password')}
                             style={{marginBottom: '15px'}}/>
-              <Form.Control value={signUpInfo.pwCheck} type="password" placeholder="비밀번호 확인" 
-                            onChange={(e) => handleInputChange(e, 'pwCheck')}
+              <Form.Control value={signUpInfo.confirmPassword} type="password" placeholder="비밀번호 확인" 
+                            onChange={(e) => handleInputChange(e, 'confirmPassword')}
                             style={{marginBottom: '15px'}}/>
-              { signUpInfo.pw !== signUpInfo.pwCheck&& <p style={{color: 'red', marginLeft: '10px'}}>비밀번호가 일치하지 않습니다.</p>}
+              { signUpInfo.password !== signUpInfo.confirmPassword&& <p style={{color: 'red', marginLeft: '10px'}}>비밀번호가 일치하지 않습니다.</p>}
               <Form.Control value={signUpInfo.nickname} type="text" placeholder="별명" 
                             onChange={(e) => handleInputChange(e, 'nickname')}
                             style={{marginBottom: '15px'}}/>

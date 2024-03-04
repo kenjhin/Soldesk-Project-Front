@@ -7,9 +7,17 @@ const MyInfoModal = ({data, setData}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const modalBackground = useRef();
   const [prevData, setPrevData] = useState();
-  
+  const addressParts = data.address.split('!!');
+
   const handleOpen = () => {
-    setPrevData(data);
+    setPrevData(() => ({
+      ...data,
+      address: {
+        zonecode: addressParts[0],
+        fullAddress: addressParts[1],
+        detailAddress: addressParts[2],
+      }
+    }));
     setModalOpen(true);
   }
 
@@ -20,43 +28,55 @@ const MyInfoModal = ({data, setData}) => {
 
   // // input에 value값 할당했을 때 입력으로 값 변경하기 위한 함수
   const handleInputChange = (e, key) => {
-    setPrevData((prevUserInfo) => ({
-      ...prevUserInfo,
-      [key]: e.target.value,
-      address: {
-        ...prevUserInfo.address,
-        detailAddress: key === 'detailAddress' ? e.target.value : prevUserInfo.address.detailAddress,
-      },
-    }));
+    if(key!=='detailAddress'){
+      setPrevData(() => ({
+        ...prevData,
+        [key]: e.target.value,
+      }));
+    }else{
+      setPrevData(() => ({
+        ...prevData,
+        address: {
+          ...prevData.address,
+          detailAddress: e.target.value,
+        },
+      }));
+    }
   };
 
   // 확인
   const handleConfirmClick = () => {
     // 미입력 시 경고 메시지 추가
-    if (!prevData.id || !prevData.pw || !prevData.pwCheck || !prevData.nickname || !prevData.address.zonecode || 
+    if (!prevData.username || !prevData.password || !prevData.confirmPassword || !prevData.nickname || !prevData.address.zonecode || 
         !prevData.address.fullAddress || !prevData.address.detailAddress) {
       alert('모든 항목을 입력해주세요.');
       return;
     }
     
     // 비밀번호 일치 여부 확인
-    if (prevData.pw !== prevData.pwCheck) {
+    if (prevData.password !== prevData.confirmPassword) {
       alert('비밀번호가 일치하지 않습니다.');
       return;
     }
 
-    setData(prevData);
+    // prevData의 address의 데이터 사이에 !!을 넣어서 합쳐주고 setData
+    setData(() => ({
+      ...prevData,
+      address: [prevData.address.zonecode, prevData.address.fullAddress, prevData.address.detailAddress].join('!!'),
+    }));
+    // DB에 전송하기
+    // DB전송함수
     alert('저장되었습니다.')
   };
 
   // 주소 선택시 저장
   const handleAddressSelected = (zonecode, fullAddress) => {
-    setPrevData((prevUserInfo) => ({
-      ...prevUserInfo,
+    setPrevData(() => ({
+      ...prevData,
       address: {
         zonecode: zonecode,
         fullAddress: fullAddress,
-        detailAddress: prevData.address.detailAddress
+        detailAddress: prevData.address.detailAddress,
       }
     }));
   };
@@ -79,14 +99,14 @@ const MyInfoModal = ({data, setData}) => {
             <div className="myInfoBox">
               <h1>MY INFO</h1>
               <div className="myInfo-1">
-                <input defaultValue={prevData.id} style={{borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}} 
+                <input defaultValue={prevData.username} style={{borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}} 
                         readOnly spellCheck="false"/>
-                <input value={prevData.pw} type="password" placeholder="비밀번호" 
+                <input value={prevData.password} type="password" placeholder="비밀번호" 
                         onChange={(e) => handleInputChange(e, 'pw')}/>
-                <input value={prevData.pwCheck} type="password" placeholder="비밀번호 확인" 
+                <input value={prevData.confirmPassword} type="password" placeholder="비밀번호 확인" 
                         style={{borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px'}} 
-                        onChange={(e) => handleInputChange(e, 'pwCheck')}/>
-                  {prevData.pw!==prevData.pwCheck && 
+                        onChange={(e) => handleInputChange(e, 'confirmPassword')}/>
+                  {prevData.password!==prevData.confirmPassword && 
                     <p style={{color: 'red'}}>비밀번호가 일치하지 않습니다.</p>}
               </div>
               <div className="myInfo-2">
