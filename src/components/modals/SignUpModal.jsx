@@ -16,6 +16,7 @@ function SignUpModal({show, onHide}) {
       detailAddress: ''
     }
   };
+
   const [signUpInfo, setSignUpInfo] = useState(defaultInfo);
   // 회원가입 user 스테이트
   const [userData, setUserData] = useState({
@@ -112,7 +113,7 @@ function SignUpModal({show, onHide}) {
       .then(response => {
         // 서버로부터의 응답 처리
         if (response.data.success) {
-          setUserData({
+          setSignUpInfo({
             username: '',
             password: '',
             confirmPassword: '',
@@ -130,7 +131,17 @@ function SignUpModal({show, onHide}) {
       .catch(error => {
         console.error('회원가입 오류:', error);
       });
+
+    // 초기화 및 종료.
+    
+    alert('회원가입 완료');
+    onHide();
+    setSignUpInfo(defaultInfo);
   };
+
+
+
+
 
   return (
     <Modal
@@ -166,9 +177,10 @@ function SignUpModal({show, onHide}) {
               <Form.Control value={signUpInfo.nickname} type="text" placeholder="별명" 
                             onChange={(e) => handleInputChange(e, 'nickname')}
                             style={{marginBottom: '15px'}}/>
-              <PostCode onAddressSelected={handleAddressSelected} 
+              <PostCode onAddressSelected={handleAddressSelected}
+                          
                         inputForm={<>
-                          <Form.Control value={signUpInfo.address.zonecode} type="text" placeholder="우편번호" 
+                          <Form.Control value={signUpInfo.address.zonecode}  type="text" placeholder="우편번호" 
                                         style={{marginBottom: '15px'}}/>
                           <Form.Control value={signUpInfo.address.fullAddress} type="text" placeholder="주소" 
                                         style={{marginBottom: '15px'}}/>              
