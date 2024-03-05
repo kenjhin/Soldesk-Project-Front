@@ -96,7 +96,7 @@ const MyInfoModal = ({ data, setData }) => {
       ...prevData,
       address: [prevData.address.zonecode, prevData.address.fullAddress, prevData.address.detailAddress].join('!!'),
     }));
-    // DB에 전송하기
+    // DB에 전송하기 data << 이거 보내면 됨
     // DB전송함수
     alert('저장되었습니다.')
 

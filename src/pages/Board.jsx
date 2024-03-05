@@ -1,30 +1,29 @@
 /* eslint-disable */
 import React, { useState, useEffect  } from 'react';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import PostDetail from './PostDetail';
+import { Link, useLocation } from 'react-router-dom';
 
 const Board = () => {
   const [defaultData, setDefaultData] = useState([{
     boardId: 1,
-    postNum: 1,
-    postTitle: ["111111111111"],
-    postContent: "sdaasd",
-    postWriter: "김기모띵",
-    postDate: "2024.02.21",
-    postViews: 0,
-    postLike: 0,
+    id: 1,
+    title: ["111111111111"],
+    content: "sdaasd하늘이파랗구나",
+    writer: "김기모띵",
+    date: "2024.02.21",
+    views: 0,
+    like: 0,
   },{
     boardId: 2,
-    postNum: 2,
-    postTitle: ["222222222"],
-    postContent: "sdaasd",
-    postWriter: "김기모띵",
-    postDate: "2024.02.21",
-    postViews: 0,
-    postLike: 0,
+    id: 2,
+    title: ["살려주세요"],
+    content: "존나힘들어요 ㅅㅂ ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ",
+    writer: "2등",
+    date: "2024.02.21",
+    views: 0,
+    like: 0,
   }]);
   const location = useLocation();
-  const boardId = location.state?.boardId; // 추가된 부분
+  const boardId = location.state?.boardId; 
   const boardNames =(['자유게시판', '인기게시판', '이슈게시판', '기념게시판', '신고게시판']);
   const [data, setData] = useState(defaultData);
   const [currentPage, setCurrentPage] = useState(1);  // 현재 페이지: 1번 페이지
@@ -32,7 +31,7 @@ const Board = () => {
   
   useEffect(() => {
     fetchData();
-  }, [currentPage]);
+  }, [currentPage], [data]);
   
   const fetchData = async () => {
     try {
@@ -51,7 +50,7 @@ const Board = () => {
   const indexOfLastPost = currentPage * postsPerPage; 
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost); // 현재 페이지에서 보여줄 20개(postsPerPage)의 포스트
-  const filteredPosts = currentPosts.filter(item => item.boardId === boardId);
+  const filteredPosts = currentPosts.filter(post => post.boardId === boardId);
 
   return (
     <div
@@ -84,29 +83,31 @@ const Board = () => {
         </table>
         <table className="boardTable">
           <tbody style={{ minHeight: "auto" }}>
-            {filteredPosts.map((item) => (
-              <tr key={item.id}>
-                <td className="td_id">{item.postNum}</td>
+            {/* 데이터 post state로 넘겨주는 곳 */}
+            {filteredPosts.map((post) => (
+              <tr key={post.id}>
+                <td className="td_id">{post.id}</td>
                 <td className="td_title">
-                  <Link
-                    to={{
-                      pathname: `/board/${item.boardId}/${item.postNum}`,
-                      state: { item },
-                    }}
-                  >
-                    {item.postTitle[0]}
-                  </Link>
+                <Link
+                  to={`/board/${post.boardId}/${post.id}`}
+                  state={{ post }}
+                >
+                  {post.title[0]}
+                </Link>
                 </td>
-                <td className="td_writer">{item.postWriter}</td>
-                <td className="td_date">{item.postDate}</td>
-                <td className="td_views">{item.postViews}</td>
-                <td className="td_like">{item.postLike}</td>
+                <td className="td_writer">{post.writer}</td>
+                <td className="td_date">{post.date}</td>
+                <td className="td_views">{post.views}</td>
+                <td className="td_like">{post.like}</td>
               </tr>
             ))}
             {/* 글쓰기 */}
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <button style={{marginTop: '10px', border: 'white solid 1px', background: 'none', color: 'white'}}
-                      onClick={() => {}}>글쓰기</button>
+            <Link to={`/board/${boardId}/post`} state={{ boardId: boardId }} style={{ textDecoration: 'none' }} >
+              <button style={{ marginTop: '10px', border: 'white solid 1px', background: 'none', color: 'white' }}>
+                글쓰기
+              </button>
+          </Link>
             </div>
             {/* 페이지 버튼 */}
             <div style={{ display: "flex", justifyContent: "center" }}>
