@@ -181,7 +181,6 @@ function App() {
                         </div>
                       </div>
                   }/>
->>>>>>> 0c84c25c7e74daaf6c96ad24a76accbb157d91a4
                   <div className="nameBox">
                     <p className="nickname">{userData.nickname}</p>
                     <p className="profileMessage">"{userData.profileMessage}"</p>
