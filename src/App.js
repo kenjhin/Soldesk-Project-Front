@@ -25,7 +25,7 @@ function App() {
 
   // state
   // DB로부터 값을 받아서 넣을 곳(icons는 mysql에서 TEXT타입으로 하면 문자열배열로 나타낼수있음)
-  const [userInfo, setUserInfo] = useState({
+  const [userData, setUserData] = useState({
     logined: true,
     icon: hamster,
     icons: [hamster, hamster],
@@ -83,7 +83,7 @@ function App() {
           path="/*"
           element={
             // 로그인되어있으면 그대로(완료), 안되어있으면 /login으로 보내줘야함(미완)
-            userInfo.logined &&
+            userData.logined &&
             <div className="homeBody">
               <header className="header">
                 <div className="headerBtnBox">
@@ -99,7 +99,7 @@ function App() {
                     ))}
                   </div>
                   <div className="rightBtnBox">
-                    <MyInfoModal data={userInfo} setData={setUserInfo}/>
+                    <MyInfoModal data={userData} setData={setUserData}/>
                     <button className="inventoryBtn mouseover">
                       <img src={inventoryIco} alt="" />
                     </button>
@@ -110,12 +110,12 @@ function App() {
                 </div>
                 <div className="headerProfileBox">
                   {/* hamster에 현재 로그인한 계정의 아이콘 받아오기 */}
-                  <IconSetModal img={<img className="userIcon" src={userInfo.icon} alt="" />}
+                  <IconSetModal img={<img className="userIcon" src={userData.icon} alt="" />}
                     content={
                       <div className="iconModal">
                         <div className="iconModalLeftBox">
-                          <img src={userInfo.icon} alt=""/>
-                          <p>{userInfo.nickname}</p>
+                          <img src={userData.icon} alt=""/>
+                          <p>{userData.nickname}</p>
                         </div>
                         <div className="iconModalRightBox">
                           <div className="iconModalTitle">
@@ -123,11 +123,11 @@ function App() {
                           </div>
                           <div className="iconSelectArea">
                             {
-                              userInfo.icons.map(function(a, i){
+                              userData.icons.map(function(a, i){
                                 return (
                                   <div key={i} className="iconsBox">
                                     {/* 눌렀을 때 icon=icons[i]로 바꾸기 */}
-                                    <img src={userInfo.icons[i]}/>
+                                    <img src={userData.icons[i]}/>
                                   </div>
                                 )
                               })
@@ -137,8 +137,8 @@ function App() {
                       </div>
                   }/>
                   <div className="nameBox">
-                    <p className="nickname">{userInfo.nickname}</p>
-                    <p className="profileMessage">"{userInfo.profileMessage}"</p>
+                    <p className="nickname">{userData.nickname}</p>
+                    <p className="profileMessage">"{userData.profileMessage}"</p>
                   </div>
                   <button className="logoutBtn" onClick={handleLogout}>logout</button>
                 </div>

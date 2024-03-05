@@ -1,14 +1,13 @@
 /* eslint-disable */
 import React, { useState } from 'react'
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "../styles/Main.css";
 import logo from "../assets/img/login/login_banner.png"
 import Board from './Board';
+import PostDetail from './PostDetail';
+import Post from './Post';
 
 const Main = () => {
-
-  const location = useLocation();
-  const boardId = location.state?.boardId;
 
   return (
     <div className="mainBody">
@@ -34,7 +33,9 @@ const Main = () => {
             </div>
           }
         />
-        <Route path={`board/${boardId}/*`} element={<Board/>}/>
+        <Route path={`/board/:boardId/*`} element={<Board/>}/>
+        <Route path={`/board/:boardId/:postId`} element={<PostDetail/>}/>
+        <Route path={`/board/:boardId/post`} element={<Post/>}/> 
       </Routes>
     </div>
   );
