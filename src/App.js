@@ -1,11 +1,6 @@
 /* eslint-disable */
-<<<<<<< HEAD
-import React, { useState, useRef, useEffect } from "react";
-import { Routes, Route, Link, useNavigate, Navigate } from "react-router-dom";
-=======
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
->>>>>>> 0c84c25c7e74daaf6c96ad24a76accbb157d91a4
 // css
 import "./styles/App.css";
 // img
@@ -33,38 +28,38 @@ function App() {
   const [userData, setUserData] = useState({
     logined: true,
     icon: hamster,
-    icons: [],
+    icons: [hamster, hamster],
+    nickname: '유저닉네임',
     profileMessage: '상태메시지',
-<<<<<<< HEAD
     status: undefined,
-    pwCheck: '',
-  });
-
-=======
-    status: 'online',
-    username: 'ID',
-    password: 'password',
-    confirmPassword: 'password',
-    address: 'zonecode!!fullAddress!!detailAddress',
+    id: 'ID',
+    pw: 'password',
+    pwCheck: 'password',
+    address: {
+      zonecode: 'zonecode',
+      fullAddress: 'fullAddress',
+      detailAddress: 'detailAddress'
+    }
   });
   
->>>>>>> 0c84c25c7e74daaf6c96ad24a76accbb157d91a4
   const boardNames = ['자유게시판', '인기게시판', '이슈게시판', '기념게시판', '신고게시판'];
   const navigate = useNavigate();
   const [redirected, setRedirected] = useState(false);
   
-
   useEffect(() => {
     // 서버에서 사용자 정보를 가져오는 비동기 함수
     const fetchUserData = async () => {
       
+      // userInfo 스테이트가 userData로 바뀌었음!!
+      // 확인 바람!!
+
       try {
         // axios로 서버에 요청하여 사용자 정보를 가져오기
         const response = await axios.get('http://localhost:3001/getUserInfo', { withCredentials: true });
         const userData = response.data.userInfo; // 서버에서 받아온 데이터 구조에 따라 수정
 
         console.log('UserData from server:', userData);  // 서버에서 받아온 데이터 확인
-        setUserInfo(userData);
+        setUserData(userData);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -74,15 +69,6 @@ function App() {
     fetchUserData();
 
   }, []);
-
-
-
-
-
-
-
-
-
 
   // 로그아웃 기능 임시 함수
   const handleLogout = () => {
