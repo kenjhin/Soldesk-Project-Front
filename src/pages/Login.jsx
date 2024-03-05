@@ -15,6 +15,7 @@ function Login() {
   const [modalShow, setModalShow] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userInfo, setUserInfo] = useState(null);
 
   function handleTextInputValueChange(value) {
     setUsername(value);
@@ -30,18 +31,30 @@ function Login() {
       alert('아이디와 비밀번호를 모두 입력하세요.');
       return;
     }
-
-    axios.post('http://localhost:3001/login', { username, password })
+  
+    axios.post('http://localhost:3001/login', { username, password }, { withCredentials: true })
       .then(response => {
         if (response.data.success) {
           // 로그인 성공
-          sessionStorage.setItem('isLoggedIn', true);
-          sessionStorage.setItem('username', response.data.userInfo.username);
-
-          console.log('로그인 유저 정보:', {
-            isLoggedIn: sessionStorage.getItem('isLoggedIn'),
-            username: sessionStorage.getItem('username')
-          });
+          // 클라이언트에서도 쿠키 설정
+          document.cookie = `isLoggedIn=${true}; path=/;`;
+          document.cookie = `username=${response.data.userInfo.username}; path=/;`;
+  
+          // 서버에서 사용자 정보를 추가로 가져오기
+          axios.get('http://localhost:3001/getUserInfo', { withCredentials: true })
+            .then(userInfoResponse => {
+              if (userInfoResponse.data.success) {
+                // 사용자 정보 저장
+                setUserInfo(userInfoResponse.data.userInfo);
+                console.log('사용자 정보:', userInfoResponse.data.userInfo);
+              } else {
+                console.error('사용자 정보 가져오기 실패:', userInfoResponse.data.message);
+              }
+            })
+            .catch(error => {
+              console.error('사용자 정보 가져오기 오류:', error);
+            });
+  
           // 여기서 서버에서 전달한 redirectPath로 리다이렉트
           navigate(response.data.redirectPath);
         } else {

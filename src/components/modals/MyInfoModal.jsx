@@ -1,24 +1,50 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import myInfoIco from "../../assets/img/home/nav-icon-profile.png";
 import PostCode from '../PostCode';
 import "../../styles/MyInfoModal.css";
+import axios from 'axios';
 
-const MyInfoModal = ({data, setData}) => {
+const MyInfoModal = ({ data, setData }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const modalBackground = useRef();
-  const [prevData, setPrevData] = useState();
-  
+  const [prevData, setPrevData] = useState({
+    id: '',
+    pw: '',
+    pwCheck: '',
+    nickname: '',
+    address: {
+      zonecode: '',
+      fullAddress: '',
+      detailAddress: '',
+    },
+  });
+
+  useEffect(() => {
+    // 서버에서 사용자 정보를 가져오는 비동기 함수
+    const fetchUserData = async () => {
+      try {
+        // axios로 서버에 요청하여 사용자 정보를 가져오기
+        const response = await axios.get('http://localhost:3001/getUserInfo', { withCredentials: true });
+        const userData = response.data.userInfo; // 서버에서 받아온 데이터 구조에 따라 수정
+        
+        setPrevData(userData);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    // 컴포넌트가 마운트될 때 서버에서 데이터를 가져오기
+    fetchUserData();
+  }, []); // 빈 배열은 컴포넌트가 마운트될 때 한 번만 실행되도록 함
+
   const handleOpen = () => {
-    setPrevData(data);
     setModalOpen(true);
-  }
+  };
 
   const handleClose = () => {
-    setPrevData(data);
     setModalOpen(false);
   };
 
-  // // input에 value값 할당했을 때 입력으로 값 변경하기 위한 함수
   const handleInputChange = (e, key) => {
     setPrevData((prevUserInfo) => ({
       ...prevUserInfo,
@@ -30,86 +56,131 @@ const MyInfoModal = ({data, setData}) => {
     }));
   };
 
-  // 확인
   const handleConfirmClick = () => {
-    // 미입력 시 경고 메시지 추가
-    if (!prevData.id || !prevData.pw || !prevData.pwCheck || !prevData.nickname || !prevData.address.zonecode || 
-        !prevData.address.fullAddress || !prevData.address.detailAddress) {
+    if (!prevData.id || !prevData.pw || !prevData.pwCheck || !prevData.nickname || !prevData.address.zonecode ||
+      !prevData.address.fullAddress || !prevData.address.detailAddress) {
       alert('모든 항목을 입력해주세요.');
       return;
     }
-    
-    // 비밀번호 일치 여부 확인
+
     if (prevData.pw !== prevData.pwCheck) {
       alert('비밀번호가 일치하지 않습니다.');
       return;
     }
 
     setData(prevData);
-    alert('저장되었습니다.')
+    alert('저장되었습니다.');
   };
 
-  // 주소 선택시 저장
   const handleAddressSelected = (zonecode, fullAddress) => {
     setPrevData((prevUserInfo) => ({
       ...prevUserInfo,
       address: {
         zonecode: zonecode,
         fullAddress: fullAddress,
-        detailAddress: prevData.address.detailAddress
-      }
+        detailAddress: prevData.address.detailAddress,
+      },
     }));
   };
 
   return (
     <>
       <div>
-        <button className="myInfoBtn mouseover" onClick={() => handleOpen()}>
-            <img src={myInfoIco} alt="" />
+        <button
+          className="myInfoBtn mouseover"
+          onClick={() => handleOpen()}
+        >
+          <img src={myInfoIco} alt="" />
         </button>
       </div>
-      {
-        modalOpen &&
-        <div className="myInfo-container" ref={modalBackground} onClick={e => {
-          if (e.target === modalBackground.current) {
-            handleClose();
-          }
-        }}>
+      {modalOpen && (
+        <div
+          className="myInfo-container"
+          ref={modalBackground}
+          onClick={(e) => {
+            if (e.target === modalBackground.current) {
+              handleClose();
+            }
+          }}
+        >
           <div className="myInfo-content">
             <div className="myInfoBox">
               <h1>MY INFO</h1>
               <div className="myInfo-1">
-                <input defaultValue={prevData.id} style={{borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}} 
-                        readOnly spellCheck="false"/>
-                <input value={prevData.pw} type="password" placeholder="비밀번호" 
-                        onChange={(e) => handleInputChange(e, 'pw')}/>
-                <input value={prevData.pwCheck} type="password" placeholder="비밀번호 확인" 
-                        style={{borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px'}} 
-                        onChange={(e) => handleInputChange(e, 'pwCheck')}/>
-                  {prevData.pw!==prevData.pwCheck && 
-                    <p style={{color: 'red'}}>비밀번호가 일치하지 않습니다.</p>}
+                <input
+                  value={prevData.username}
+                  style={{
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
+                  }}
+                  readOnly
+                  spellCheck="false"
+                />
+                <input
+                  value={prevData.password}
+                  type="password"
+                  placeholder="비밀번호"
+                  onChange={(e) => handleInputChange(e, "pw")}
+                />
+                <input
+                  value={prevData.pwCheck}
+                  type="password"
+                  placeholder="비밀번호 확인"
+                  style={{
+                    borderBottomLeftRadius: "10px",
+                    borderBottomRightRadius: "10px",
+                  }}
+                  onChange={(e) => handleInputChange(e, "pwCheck")}
+                />
+                {prevData.password !== prevData.pwCheck && (
+                  <p style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</p>
+                )}
               </div>
               <div className="myInfo-2">
-                <input defaultValue={prevData.nickname} readOnly spellCheck="false" 
-                        style={{borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}}/>
-                
-                
-                <PostCode onAddressSelected={handleAddressSelected} 
-                          inputForm={<>
-                            <input value={prevData.address.zonecode} spellCheck="false" readOnly/>
-                            <input value={prevData.address.fullAddress} spellCheck="false" readOnly/>   
-                          </>}/>
-                <input value={prevData.address.detailAddress} spellCheck="false"
-                  style={{borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px'}}
-                  onChange={(e) => handleInputChange(e, 'detailAddress')}/>
+                <input
+                  value={prevData.name}
+                  readOnly
+                  spellCheck="false"
+                  style={{
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
+                  }}
+                />
+
+                <PostCode
+                  onAddressSelected={handleAddressSelected}
+                  inputForm={
+                    <>
+                      <input
+                        value={prevData.address}
+                        spellCheck="false"
+                        readOnly
+                      />
+                      <input
+                        value={prevData.address}
+                        spellCheck="false"
+                        readOnly
+                      />
+                    </>
+                  }
+                />
+                <input
+                  value={prevData.address}
+                  spellCheck="false"
+                  style={{
+                    borderBottomLeftRadius: "10px",
+                    borderBottomRightRadius: "10px",
+                  }}
+                  onChange={(e) => handleInputChange(e, "detailAddress")}
+                />
               </div>
               <button onClick={handleConfirmClick}>확인</button>
             </div>
           </div>
         </div>
-      }
+      )}
     </>
-  )
-}
+  );
+};
 
-export default MyInfoModal
+export default MyInfoModal;
