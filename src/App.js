@@ -1,6 +1,11 @@
 /* eslint-disable */
+<<<<<<< HEAD
+import React, { useState, useRef, useEffect } from "react";
+import { Routes, Route, Link, useNavigate, Navigate } from "react-router-dom";
+=======
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
+>>>>>>> 0c84c25c7e74daaf6c96ad24a76accbb157d91a4
 // css
 import "./styles/App.css";
 // img
@@ -28,9 +33,14 @@ function App() {
   const [userData, setUserData] = useState({
     logined: true,
     icon: hamster,
-    icons: [hamster, hamster],
-    nickname: '유저닉네임',
+    icons: [],
     profileMessage: '상태메시지',
+<<<<<<< HEAD
+    status: undefined,
+    pwCheck: '',
+  });
+
+=======
     status: 'online',
     username: 'ID',
     password: 'password',
@@ -38,24 +48,59 @@ function App() {
     address: 'zonecode!!fullAddress!!detailAddress',
   });
   
+>>>>>>> 0c84c25c7e74daaf6c96ad24a76accbb157d91a4
   const boardNames = ['자유게시판', '인기게시판', '이슈게시판', '기념게시판', '신고게시판'];
   const navigate = useNavigate();
+  const [redirected, setRedirected] = useState(false);
   
+
+  useEffect(() => {
+    // 서버에서 사용자 정보를 가져오는 비동기 함수
+    const fetchUserData = async () => {
+      
+      try {
+        // axios로 서버에 요청하여 사용자 정보를 가져오기
+        const response = await axios.get('http://localhost:3001/getUserInfo', { withCredentials: true });
+        const userData = response.data.userInfo; // 서버에서 받아온 데이터 구조에 따라 수정
+
+        console.log('UserData from server:', userData);  // 서버에서 받아온 데이터 확인
+        setUserInfo(userData);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    // 컴포넌트가 마운트될 때 한 번만 실행되도록 함
+    fetchUserData();
+
+  }, []);
+
+
+
+
+
+
+
+
+
+
   // 로그아웃 기능 임시 함수
   const handleLogout = () => {
     axios.post('http://localhost:3001/logout')
       .then(response => {
         if (response.data.success) {
-          // 유저 세션 삭제후 Login페이지로 리다이렉트
+          // 클라이언트에서도 쿠키 및 세션 삭제 후 Login 페이지로 리다이렉트
+          document.cookie = 'isLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
           sessionStorage.removeItem('isLoggedIn');
           sessionStorage.removeItem('username');
           navigate(response.data.redirectPath);
-
+  
           console.log('로그아웃 확인 콘솔:', {
             isLoggedIn: sessionStorage.getItem('isLoggedIn'),
             username: sessionStorage.getItem('username')
           });
-
+  
         } else if (response.data.sessionExpired) {
           console.log('세션이 이미 만료되었습니다.');
         } else {
@@ -80,7 +125,7 @@ function App() {
         />
 
         <Route
-          path="/*"
+          path="/"
           element={
             // 로그인되어있으면 그대로(완료), 안되어있으면 /login으로 보내줘야함(미완)
             userData.logined &&
@@ -110,7 +155,7 @@ function App() {
                 </div>
                 <div className="headerProfileBox">
                   {/* hamster에 현재 로그인한 계정의 아이콘 받아오기 */}
-                  <IconSetModal img={<img className="userIcon" src={userData.icon} alt="" />}
+                  <IconSetModal img={<img className="userIcon" src={userInfo.icon} alt="" />}
                     content={
                       <div className="iconModal">
                         <div className="iconModalLeftBox">
@@ -136,12 +181,15 @@ function App() {
                         </div>
                       </div>
                   }/>
+>>>>>>> 0c84c25c7e74daaf6c96ad24a76accbb157d91a4
                   <div className="nameBox">
                     <p className="nickname">{userData.nickname}</p>
                     <p className="profileMessage">"{userData.profileMessage}"</p>
                   </div>
                   <button className="logoutBtn" onClick={handleLogout}>logout</button>
                 </div>
+
+
               </header>
               <main className="main">
                 <div className="messenger">
@@ -156,12 +204,15 @@ function App() {
 
                   </div>
                 </div>
+
+                
                 <Main/>
               </main>
               <footer>
 
               </footer>
             </div>
+      
           }
         />
       </Routes>
