@@ -1,6 +1,11 @@
 /* eslint-disable */
+<<<<<<< HEAD
 import React, { useState, useRef, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Navigate } from "react-router-dom";
+=======
+import React, { useState, useEffect } from "react";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
+>>>>>>> 0c84c25c7e74daaf6c96ad24a76accbb157d91a4
 // css
 import "./styles/App.css";
 // img
@@ -24,6 +29,7 @@ import axios from "axios";
 function App() {
 
   // state
+  // DB로부터 값을 받아서 넣을 곳(icons는 mysql에서 TEXT타입으로 하면 문자열배열로 나타낼수있음)
   const [userInfo, setUserInfo] = useState({
     name: '',
     password: '',
@@ -37,10 +43,20 @@ function App() {
     icon: hamster,
     icons: [],
     profileMessage: '상태메시지',
+<<<<<<< HEAD
     status: undefined,
     pwCheck: '',
   });
 
+=======
+    status: 'online',
+    username: 'ID',
+    password: 'password',
+    confirmPassword: 'password',
+    address: 'zonecode!!fullAddress!!detailAddress',
+  });
+  
+>>>>>>> 0c84c25c7e74daaf6c96ad24a76accbb157d91a4
   const boardNames = ['자유게시판', '인기게시판', '이슈게시판', '기념게시판', '신고게시판'];
   const navigate = useNavigate();
   const [redirected, setRedirected] = useState(false);
@@ -130,7 +146,7 @@ function App() {
                       <button className="homeBtn mouseover">홈</button>
                     </Link>
                     {boardNames.map((boardName, index) => (
-                      <Link key={index + 1} to={`/board/${index + 1}`}>
+                      <Link key={index + 1} to={`/board/${index + 1}`} state={{boardId: index+1}}>
                         <button className="boardBtn mouseover">{boardName}</button>
                       </Link>
                     ))}
@@ -146,9 +162,8 @@ function App() {
                   </div>
                 </div>
                 <div className="headerProfileBox">
-                  {/* 로그아웃 임시 버튼 만들었어요. */}
-                  <button className="logoutBtntest" onClick={handleLogout}>로그아웃</button>
                   {/* hamster에 현재 로그인한 계정의 아이콘 받아오기 */}
+<<<<<<< HEAD
                             <IconSetModal img={<img className="userIcon" src={userInfo.icon} alt="" />}
                               content={
                                 <div className="iconModal">
@@ -173,21 +188,55 @@ function App() {
                                   </div>
                                 </div>
                               }/>
+=======
+                  <IconSetModal img={<img className="userIcon" src={userInfo.icon} alt="" />}
+                    content={
+                      <div className="iconModal">
+                        <div className="iconModalLeftBox">
+                          <img src={userInfo.icon} alt=""/>
+                          <p>{userInfo.nickname}</p>
+                        </div>
+                        <div className="iconModalRightBox">
+                          <div className="iconModalTitle">
+                            <p>아이콘 설정</p>
+                          </div>
+                          <div className="iconSelectArea">
+                            {
+                              userInfo.icons.map(function(a, i){
+                                return (
+                                  <div key={i} className="iconsBox">
+                                    {/* 눌렀을 때 icon=icons[i]로 바꾸기 */}
+                                    <img src={userInfo.icons[i]}/>
+                                  </div>
+                                )
+                              })
+                            }
+                          </div>
+                        </div>
+                      </div>
+                  }/>
+>>>>>>> 0c84c25c7e74daaf6c96ad24a76accbb157d91a4
                   <div className="nameBox">
                     <p className="name">{userInfo.name}</p>
                     <p className="profileMessage">"{userInfo.profileMessage}"</p>
                   </div>
+                  <button className="logoutBtn" onClick={handleLogout}>logout</button>
                 </div>
 
 
               </header>
               <main className="main">
                 <div className="messenger">
-                  <p className="messengerText">커뮤니티</p>
-                  <button className="messengerBtn"><img className="messengerBtn" src={search}/></button>
-                  <button className="messengerBtn"><img className="messengerBtn" src={sort}/></button>
-                  <button className="messengerBtn"><img className="messengerBtn" src={addFolder}/></button>
-                  <button className="messengerBtn"><img className="messengerBtn" src={addPerson}/></button>
+                  <div className="messengerBtnBox">
+                    <p className="messengerText">커뮤니티</p>
+                    <button className="messengerBtn"><img src={search}/></button>
+                    <button className="messengerBtn"><img src={sort}/></button>
+                    <button className="messengerBtn"><img src={addFolder}/></button>
+                    <button className="messengerBtn"><img src={addPerson}/></button>
+                  </div>
+                  <div className="messengerGroupArea">
+
+                  </div>
                 </div>
 
                 
