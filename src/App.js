@@ -32,9 +32,9 @@ function App() {
     nickname: '유저닉네임',
     profileMessage: '상태메시지',
     status: undefined,
-    id: 'ID',
-    pw: 'password',
-    pwCheck: 'password',
+    username: 'ID',
+    password: 'password',
+    confirmPassword: 'password',
     address: {
       zonecode: 'zonecode',
       fullAddress: 'fullAddress',
@@ -67,7 +67,6 @@ function App() {
 
     // 컴포넌트가 마운트될 때 한 번만 실행되도록 함
     fetchUserData();
-
   }, []);
 
   // 로그아웃 기능 임시 함수
@@ -111,7 +110,7 @@ function App() {
         />
 
         <Route
-          path="/"
+          path="*"
           element={
             // 로그인되어있으면 그대로(완료), 안되어있으면 /login으로 보내줘야함(미완)
             userData.logined &&
@@ -141,7 +140,7 @@ function App() {
                 </div>
                 <div className="headerProfileBox">
                   {/* hamster에 현재 로그인한 계정의 아이콘 받아오기 */}
-                  <IconSetModal img={<img className="userIcon" src={userInfo.icon} alt="" />}
+                  <IconSetModal img={<img className="userIcon" src={userData.icon} alt="" />}
                     content={
                       <div className="iconModal">
                         <div className="iconModalLeftBox">

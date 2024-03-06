@@ -39,18 +39,8 @@ const MyInfoModal = ({ data, setData }) => {
 
 
   const [prevData, setPrevData] = useState();
-  const addressParts = data.address.split('!!');
-
   const handleOpen = () => {
-    setPrevData(() => ({
-      ...data,
-      address: {
-        zonecode: addressParts[0],
-        fullAddress: addressParts[1],
-        detailAddress: addressParts[2],
-      }
-    }));
-
+    setPrevData(data);
     setModalOpen(true);
   };
 
@@ -76,7 +66,6 @@ const MyInfoModal = ({ data, setData }) => {
   };
 
   const handleConfirmClick = () => {
-
     // 미입력 시 경고 메시지 추가
     if (!prevData.username || !prevData.password || !prevData.confirmPassword || !prevData.nickname || !prevData.address.zonecode || 
         !prevData.address.fullAddress || !prevData.address.detailAddress) {
@@ -90,12 +79,8 @@ const MyInfoModal = ({ data, setData }) => {
       return;
     }
 
-
     // prevData의 address의 데이터 사이에 !!을 넣어서 합쳐주고 setData
-    setData(() => ({
-      ...prevData,
-      address: [prevData.address.zonecode, prevData.address.fullAddress, prevData.address.detailAddress].join('!!'),
-    }));
+    setData(prevData);
     // DB에 전송하기 data << 이거 보내면 됨
     // DB전송함수
     alert('저장되었습니다.')
@@ -109,9 +94,7 @@ const MyInfoModal = ({ data, setData }) => {
         zonecode: zonecode,
         fullAddress: fullAddress,
         detailAddress: prevData.address.detailAddress,
-
       }
-
     }));
   };
 
@@ -142,7 +125,7 @@ const MyInfoModal = ({ data, setData }) => {
                 <input defaultValue={prevData.username} style={{borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}} 
                         readOnly spellCheck="false"/>
                 <input value={prevData.password} type="password" placeholder="비밀번호" 
-                        onChange={(e) => handleInputChange(e, 'pw')}/>
+                        onChange={(e) => handleInputChange(e, 'password')}/>
                 <input value={prevData.confirmPassword} type="password" placeholder="비밀번호 확인" 
                         style={{borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px'}} 
                         onChange={(e) => handleInputChange(e, 'confirmPassword')}/>
@@ -151,7 +134,7 @@ const MyInfoModal = ({ data, setData }) => {
               </div>
               <div className="myInfo-2">
                 <input
-                  value={prevData.name}
+                  value={prevData.nickname}
                   readOnly
                   spellCheck="false"
                   style={{
@@ -165,12 +148,12 @@ const MyInfoModal = ({ data, setData }) => {
                   inputForm={
                     <>
                       <input
-                        value={prevData.address}
+                        value={prevData.address.zonecode}
                         spellCheck="false"
                         readOnly
                       />
                       <input
-                        value={prevData.address}
+                        value={prevData.address.fullAddress}
                         spellCheck="false"
                         readOnly
                       />
@@ -178,7 +161,7 @@ const MyInfoModal = ({ data, setData }) => {
                   }
                 />
                 <input
-                  value={prevData.address}
+                  value={prevData.address.detailAddress}
                   spellCheck="false"
                   style={{
                     borderBottomLeftRadius: "10px",
