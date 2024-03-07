@@ -19,7 +19,7 @@
 }
 
 body{
-  background-color: black;
+  background-color: #1E1E20;
   min-width: 1920px;
   display: flex;
   justify-content: center;
@@ -142,13 +142,13 @@ body{
   cursor: pointer;
 }
 
-
+/* Messenger.jsx */
 .messenger{
   width: 270px;
   height: 850px;
   background-color: #040f18;
   float: right;
-}.messengerBtnBox{
+}.messengerHeaderBtnBox{
   width: 100%;
   height: 40px;
 }.messengerText{
@@ -157,7 +157,7 @@ body{
   float: left;
   margin: 5px;
   margin-left: 10px;
-}.messengerBtn{
+}.messengerHeaderBtn{
   width: 18px;
   height: 18px;
   outline:none;
@@ -165,7 +165,7 @@ body{
   background: none;
   float: right;
   margin: 5px;
-}.messengerBtn > img{
+}.messengerHeaderBtn > img{
   width: 18px;
   height: 18px;
   outline:none;
@@ -175,17 +175,298 @@ body{
   float: right;
   margin: 5px;
   filter: saturate(500%);
-}.messengerBtn > img:hover{
+}.messengerHeaderBtn > img:hover{
   filter: saturate(0%);
-}.messengerGroupArea{
-  border: white solid 1px;
+}.messenger-friend-area{
   width: 100%;
-  height: calc(100% - 40px);
+  height: calc(100% - 40px - 40px);
+  max-height: calc(100% - 40px - 40px);
+  display: inline-block;
+  .messenger-friend-group{
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+    
+    .messenger-group-header{
+      width: 100%;
+      height: 25px;
+      background-color: #020e17;
+      color: #d3c495;
+      font-size: 14px;
+      cursor: pointer;
+      margin-bottom: 2px;
+      padding-left: 10px;
+      
+      span{
+        vertical-align: middle;
+      }
+    }
+    .messenger-friend-list{
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 60px;
+      background-color: #041522;
+      color: white;
+      cursor: pointer;
+
+      &:hover{
+        background-color: #464646bb;
+      }
+      .friend-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%; 
+        overflow: hidden; 
+        margin-left: 10px;
+        margin-right: 10px;
+        border: #0495a9 solid 2px;
+        
+        img {
+          width: 100%; 
+          height: 100%; 
+          object-fit: cover; 
+        }
+      }
+      
+      .friend-info{
+        display: flex;
+        flex-wrap: wrap;
+        .friend-id{
+          flex-basis: 100%;
+          color: #d3c495;
+        }
+        .friend-profile-message{
+          flex-basis: 100%;
+          color: #d3c39580;
+          font-size: 14px;
+        }
+      }
+      
+    }
+  }
+  
+}
+.messengerFooterBtnBox{
+  position: relative;
+  border-top: #707070 1px solid;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.chatBtn{
+  background-image:url(../assets/img/messenger/chat_button.png); 
+  background-size: 152px;
+  background-position:0 0;
+  width: 152px;
+  height: 128px;
+  /* scale기준점 */
+  transform-origin: left;
+  scale: calc(40/128);
+  border: none;
+  outline: none;
+  &:hover{
+    background-position:0 -128px;
+  }
+  &:active{
+    background-position:0 calc(-128px * 2);
+  }
+}
+.chatModal{
+  width: 800px;
+  height: 500px;
+  background-color: #020c13e1;
+  position: absolute;
+  right: 270px;
+  bottom: 0px;
+  display: flex;
+
+  .chat-list-container{
+    width: 250px;
+    
+    .chat-list{
+      display: flex;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
+      &:hover{
+        background-color: #464646bb;
+      }
+      .chat-friend-icon{
+        img{
+          margin: 10px;
+          border-radius: 70%;
+          width: 40px;
+          height: 40px;
+          border: #0495a9 solid 3px;
+          object-fit: cover;    /* 이미지 비율 유지 */
+        }
+      }
+      .chat-info{
+        display: flex;
+        flex-wrap: wrap;
+        .chat-friend-nickname{
+          flex-basis: 100%;
+          color: white;
+        }
+        .chat-friend-content{
+          flex-basis: 100%;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          max-width: 180px;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .chat-container{
+    display: flex;
+    flex-wrap: wrap;
+    width: 550px;
+    border-left: #36363683 solid 1px;
+
+    
+    .chat-header{
+      flex-basis: 100%;
+      height: 60px;
+      border-bottom: #7c6224 solid 1px;
+
+      .chat-friend{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        position: relative;
+
+        .chat-friend-icon{
+          img{
+            margin: 10px;
+            border-radius: 70%;
+            width: 40px;
+            height: 40px;
+            border: #0495a9 solid 3px;
+            object-fit: cover;    /* 이미지 비율 유지 */
+          }
+        }
+        .chat-friend-nickname{
+          color: white;
+        }
+        .chat-closeBtn{
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          border: none;
+          background: none;
+          outline: none;
+          
+          color: #daac43;
+          font-weight: bold;
+          font-size: 18px;
+          margin: 10px;
+          &:hover{
+            filter: saturate(0%) drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+          }
+        }
+      }
+    }
+    .chat-content{
+      flex-basis: 100%;
+      max-height: 400px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      padding-left: 10px;
+      padding-right: 10px;
+      overflow: auto;
+
+      .blank{
+        min-height: 10px;
+        width: 100%;
+      }
+      .chat-content-container{
+        height: auto;
+
+        .chat-content-receive{
+          float: left;
+          position:relative;
+          margin-left: 10px;
+          margin-bottom: 5px;
+          padding: 8px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          max-width: 450px;
+          background-color: #1E2328;
+          border-radius: 10px;
+          div{
+            color: white;
+          }
+          &:after{
+            border-top:17px solid #1E2328;
+            border-left: 17px solid transparent;
+            border-right: 0px solid transparent;
+            border-bottom: 0px solid transparent;
+            content:"";
+            position:absolute;
+            top:0px;
+            left:-8px;
+          }
+        }
+        .chat-content-send{
+          float: right;
+          position:relative;
+          margin-right: 10px;
+          margin-bottom: 5px;
+          padding: 10px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          max-width: 450px;
+          background-color: #785A28;
+          border-radius: 10px;
+          div{
+            color: white;
+          }
+          &:after{
+            border-top:17px solid #785A28;
+            border-right: 17px solid transparent;
+            border-left: 0px solid transparent;
+            border-bottom: 0px solid transparent;
+            content:"";
+            position:absolute;
+            top:0px;
+            right:-8px;
+          }
+        }
+      }
+    }
+    .chat-textarea-container{
+      flex-basis: 100%;
+      textarea{
+        width: 100%;
+        height: 40px;
+        background-color: #040f18;
+        color: white;
+        padding: 10px;
+        resize: none;
+        overflow: hidden;
+        vertical-align: middle;
+        &:focus{
+          outline: none;
+        }
+      }
+    }
+  }
 }
 
+
+
+
+/* Icon */
 .iconModal{
   display: flex;
-  border: solid #463714 2px;
+  border: solid #463714 3px;
 }.iconModalLeftBox{
   display: flex;
   flex-direction: column;

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import getCurrentDateTime from '../components/function/getCurrentDateTime';
 
 const PostDetail = () => {
     const textarea = useRef();
@@ -40,20 +41,6 @@ const PostDetail = () => {
       // DB데이터 comment에 최신화
     }, [comment])
 
-    const getCurrentDateTime = () => {
-      const now = new Date();
-      const year = String(now.getFullYear()).slice(2);
-      
-      // 한 자리 숫자는 앞에 0을 붙임
-      // 월은 0부터 시작하므로 1을 더함
-      const month = String(now.getMonth() + 1).padStart(2, '0'); 
-      const day = String(now.getDate()).padStart(2, '0'); 
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-    
-      return `${year}.${month}.${day} ${hours}:${minutes}`;
-    };
-    
     // 댓글 textarea크기조절
     const handleResizeHeight = () => {
       textarea.current.style.height = 'auto'; //height 초기화
@@ -65,7 +52,6 @@ const PostDetail = () => {
       // db에 댓글등록
       // 
 
-      getCurrentDateTime
       // 일단 currentComment state에 등록
       const newComment = {
         ...currentComment,

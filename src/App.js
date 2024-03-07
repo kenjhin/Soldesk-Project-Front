@@ -7,10 +7,6 @@ import "./styles/App.css";
 import storeIco from "./assets/img/home/nav-icon-store.png";
 import inventoryIco from "./assets/img/home/nav-icon-collections.png";
 import hamster from "./assets/img/hamster.jpg";
-import addPerson from "./assets/img/home/add_person_mask.png";
-import addFolder from "./assets/img/home/add_folder_mask.png";
-import search from "./assets/img/home/search_mask.png";
-import sort from "./assets/img/home/sort_mask.png";
 // pages
 import Login from "./pages/Login";
 import Main from "./pages/Main";
@@ -19,6 +15,7 @@ import Board from './pages/Board';
 import IconSetModal from './components/modals/IconSetModal';
 import MyInfoModal from './components/modals/MyInfoModal';
 import axios from "axios";
+import Messenger from "./components/Messenger";
 
 
 function App() {
@@ -108,7 +105,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="*"
           element={
@@ -140,63 +136,22 @@ function App() {
                 </div>
                 <div className="headerProfileBox">
                   {/* hamster에 현재 로그인한 계정의 아이콘 받아오기 */}
-                  <IconSetModal img={<img className="userIcon" src={userData.icon} alt="" />}
-                    content={
-                      <div className="iconModal">
-                        <div className="iconModalLeftBox">
-                          <img src={userData.icon} alt=""/>
-                          <p>{userData.nickname}</p>
-                        </div>
-                        <div className="iconModalRightBox">
-                          <div className="iconModalTitle">
-                            <p>아이콘 설정</p>
-                          </div>
-                          <div className="iconSelectArea">
-                            {
-                              userData.icons.map(function(a, i){
-                                return (
-                                  <div key={i} className="iconsBox">
-                                    {/* 눌렀을 때 icon=icons[i]로 바꾸기 */}
-                                    <img src={userData.icons[i]}/>
-                                  </div>
-                                )
-                              })
-                            }
-                          </div>
-                        </div>
-                      </div>
-                  }/>
+                  <IconSetModal img={<img className="userIcon" src={userData.icon} alt="" />}/>
                   <div className="nameBox">
                     <p className="nickname">{userData.nickname}</p>
                     <p className="profileMessage">"{userData.profileMessage}"</p>
                   </div>
                   <button className="logoutBtn" onClick={handleLogout}>logout</button>
                 </div>
-
-
               </header>
               <main className="main">
-                <div className="messenger">
-                  <div className="messengerBtnBox">
-                    <p className="messengerText">커뮤니티</p>
-                    <button className="messengerBtn"><img src={search}/></button>
-                    <button className="messengerBtn"><img src={sort}/></button>
-                    <button className="messengerBtn"><img src={addFolder}/></button>
-                    <button className="messengerBtn"><img src={addPerson}/></button>
-                  </div>
-                  <div className="messengerGroupArea">
-
-                  </div>
-                </div>
-
-                
+                <Messenger/>
                 <Main/>
               </main>
               <footer>
 
               </footer>
             </div>
-      
           }
         />
       </Routes>
