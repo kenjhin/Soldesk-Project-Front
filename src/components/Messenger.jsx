@@ -15,22 +15,22 @@ const Messenger = () => {
     senderId: '실험용계정',
     receiverId: '잼민이',
     content: '11111111',
-    date: '',
+    date: '24.03.08 12.00',
   },{
     senderId: '실험용계정',
     receiverId: '잼민이',
     content: '22222222222222222222222222222',
-    date: '',
+    date: '24.03.08 12.01',
   },{
     senderId: '잼민이',
     receiverId: '실험용계정',
     content: '33333333333333333',
-    date: '',
+    date: '24.03.08 12.02',
   },{
     senderId: '다른사람',
     receiverId: '실험용계정',
     content: '다른 사람이 보냄',
-    date: '',
+    date: '24.03.08 12.04',
   }]);
   const [userData, setUserData] = useState({
     logined: true,

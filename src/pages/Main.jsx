@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Routes, Route } from "react-router-dom";
 import "../styles/Main.css";
 import logo from "../assets/img/login/login_banner.png"
@@ -8,12 +8,18 @@ import PostDetail from './PostDetail';
 import Post from './Post';
 
 const Main = () => {
+  const [posts, setPosts] = useState();
+
+  useEffect(() => {
+    // DB 게시글 파일들 받아오기
+    setPosts();
+  }, []); // 처음 화면 떴을 때 실행
 
   return (
     <div className="mainBody">
       <Routes>
         <Route
-          path="/home"
+          path="*"
           element={
             <div
               style={{
@@ -28,7 +34,16 @@ const Main = () => {
                 <img src={logo} alt="" />
               </div>
               <div className="hotPostBox" style={{ color: "white" }}>
-                이슈글 자리
+                <div className='host-post'>
+                  <p>좋아요 1등글</p>
+                  <p>대충 맨 위 제목 그 아래 내용</p>
+                </div>
+                <div className='host-post'>
+                  <p>좋아요 2등글</p>
+                </div>
+                <div className='host-post'>
+                  <p>좋아요 3등글</p>
+                </div>
               </div>
             </div>
           }

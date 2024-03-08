@@ -13,19 +13,19 @@ const PostDetail = () => {
       postId: 1, 
       writer: '김관무',
       content: '동해물과',
-      date: '24.03.05'
+      date: '24.03.05 08.00'
     },{
       id: 2,
       postId: 2, 
       writer: '틀딱딱',
       content: '동해물백백과',
-      date: '24.03.05'
+      date: '24.03.05 08.03'
     },{
       id: 3,
       postId: 2, 
       writer: 'asd',
       content: '윗댓특) ㅄ임',
-      date: '24.03.05'
+      date: '24.03.05 09.11'
     }]);
     const [currentComment, setCurrentComment] = useState({
       id: '',

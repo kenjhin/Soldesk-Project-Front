@@ -79,6 +79,11 @@ td{
     width: 1000px;
     height: 200px;
     border: white solid 1px;
+    display: flex;
+    .host-post{
+        flex-basis: 100%;
+        border: white solid 1px;
+    }
 }
 
 /* PostDetail.css */

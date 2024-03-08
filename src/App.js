@@ -10,16 +10,13 @@ import hamster from "./assets/img/hamster.jpg";
 // pages
 import Login from "./pages/Login";
 import Main from "./pages/Main";
-import Board from './pages/Board';
 // components
 import IconSetModal from './components/modals/IconSetModal';
 import MyInfoModal from './components/modals/MyInfoModal';
 import axios from "axios";
 import Messenger from "./components/Messenger";
 
-
 function App() {
-
   // state
   // DB로부터 값을 받아서 넣을 곳(icons는 mysql에서 TEXT타입으로 하면 문자열배열로 나타낼수있음)
   const [userData, setUserData] = useState({

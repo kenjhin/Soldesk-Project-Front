@@ -4,7 +4,6 @@ import getCurrentDateTime from '../function/getCurrentDateTime';
 import defaultIcon from "../../assets/img/hamster.jpg"
 const ChatModal = ({onHide, myChat, setMyChat, chatTarget, setChatTarget, userData, setUserData, currentChat, setCurrentChat}) => {
   const scrollRef = useRef();
-  const [friends, setFriends] = useState();
 
   // senderId나 receiverId가 내 아이디인 모든 채팅들이 시간별로 정리된 것
   
@@ -99,7 +98,7 @@ const ChatModal = ({onHide, myChat, setMyChat, chatTarget, setChatTarget, userDa
                   <span className='chat-friend-content'>
                     {/* 최근 채팅 한줄만 출력 */}
                     {myChat.filter(data => (data.receiverId === userData.nickname && data.senderId === friendId) || (data.senderId === userData.nickname && data.receiverId === friendId))
-                      .sort((a, b) => new Date(b.date) - new Date(a.date))[0]?.content}
+                      .sort((a, b) => new Date(b.date) - new Date(a.date)).reverse()[0]?.content}
                   </span>
                 </div>
               </div>

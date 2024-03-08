@@ -62,6 +62,8 @@ const Post = () => {
 
     // textarea 초기화 (setPostData에서 초기화시켜서 필요없음)
     // textarea.current.value = '';
+
+    // home으로 navigate해주면될듯
   }
 
   return (
